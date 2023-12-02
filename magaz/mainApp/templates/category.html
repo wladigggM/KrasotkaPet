@@ -4,10 +4,9 @@
 		<section>
 			<h2 style="text-align:center;">Категории</h2>
 			<ul>
-				<li style="text-align:center; margin: 20px;"><a class="category" href="#"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>Юбки и топы</a></li>
-				<li style="text-align:center; margin: 20px;"><a class="category" href="#"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>Брюки и рубашки</a></li>
-				<li style="text-align:center; margin: 20px;"><a class="category" href="#"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>Свитеры и шапки</a></li>
-				<li style="text-align:center; margin: 20px; margin-top: 50px;"><a class="category" href="#"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>Кроссовки и кеды</a></li>
+				{% for cat in categories %}
+					<li style="text-align:center; margin: 20px;"><a class="category" href="http://127.0.0.1:8000/category/{{cat.id}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>{{cat.name}}</a></li>
+				{% endfor %}
 			</ul>
 		</section>
 {% endblock %}

@@ -57,8 +57,7 @@ header {
 
 nav ul {
     height: 100px;
-    background-color: #ffcae7;
-    border-radius: 10px;
+    background-color: rgb(251 221 237);
     list-style: none;
     margin: 0;
     padding: 10px 0px;
