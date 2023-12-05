@@ -5,7 +5,7 @@
 			<h2 style="text-align:center;">Категории</h2>
 			<ul>
 				{% for cat in categories %}
-					<li style="text-align:center; margin: 20px;"><a class="category" href="http://127.0.0.1:8000/category/{{cat.id}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>{{cat.name}}</a></li>
+					<li style="text-align:center; margin: 20px;"><a class="category" href="http://127.0.0.1:8000/category/{{cat.slug_name}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br>{{cat.name}}</a></li>
 				{% endfor %}
 			</ul>
 		</section>

@@ -2,6 +2,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    slug_name = models.CharField(max_length=100, default='slug_name')
 
     def __str__(self):
         return self.name
@@ -14,6 +15,7 @@ class Item(models.Model):
     image = models.ImageField(upload_to='items')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    slug_name = models.CharField(max_length=100, default='slug_name')
 
     def __str__(self):
         return self.name

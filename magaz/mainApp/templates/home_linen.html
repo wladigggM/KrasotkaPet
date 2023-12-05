@@ -4,8 +4,7 @@
 		<section>
 			{% for cat in categories %}
 			<h2 style="text-align:center;">{{cat}}</h2>
-			{% endfor %}
-			<ul>
+						<ul>
 				{% for item in items %}
 					<li style="text-align:center; margin: 20px;">
 						<a class="category" href="#">
@@ -18,5 +17,6 @@
 					</li>
 				{% endfor %}
 			</ul>
+			{% endfor %}
 		</section>
 {% endblock %}

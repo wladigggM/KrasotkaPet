@@ -19,15 +19,11 @@ from django.urls import path
 
 from magaz import settings
 from mainApp.views import *
+
 urlpatterns = [
     path('', index),
     path('about/', about),
     path('category/', category),
     path('sale/', sale),
-    path('category/1/', home_linen),
-    path('category/2/', underwear),
-    path('category/3/', socks),
-    path('category/4/', dresses),
-    path('category/5/', blouses),
-    path('category/6/', knitwear),
+    path('category/<slug:cat_slug>/', home_linen),
 ]
