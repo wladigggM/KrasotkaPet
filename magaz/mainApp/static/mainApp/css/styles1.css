@@ -11,9 +11,13 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #292b2c;
-    background-color: #fff;
+    background-color: white;
     font-family: 'Montserrat', 'Ubuntu', sans-serif;
     overflow-x: hidden;
+}
+
+.form-container{
+    text-align: center;
 }
 
 hr {
@@ -193,4 +197,40 @@ footer p,
 
 .product button:hover {
     background-color: #0069d9;
+}
+
+.reviews {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+/* СТИЛИ ДЛЯ ОТЗЫВОВ */
+.review {
+    width: 300px;
+    margin: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+}
+.review:hover {
+    transform: scale(1.05);
+}
+.review-name {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.review-rating {
+    color: #ff9800; /* Цвет звезд рейтинга */
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.review-comment {
+    color: #555;
+    font-size: 1.2em;
+    margin-bottom: 5px;
 }

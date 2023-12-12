@@ -1,11 +1,13 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug_name = models.CharField(max_length=100, default='slug_name')
 
     def __str__(self):
         return self.name
+
 
 class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
@@ -24,3 +26,10 @@ class Item(models.Model):
         if not self.category:
             self.category = Category.objects.get(name='Домашняя одежда')
         super().save(*args, **kwargs)
+
+
+class Reviews(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    rating = models.CharField(max_length=255)
+    comment = models.TextField(max_length=255)

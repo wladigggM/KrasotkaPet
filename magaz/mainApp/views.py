@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.db.models import Max
+from django.shortcuts import render, redirect
+from random import randint as r
+from .forms import *
 from .models import *
 
 
@@ -33,3 +36,18 @@ def home_linen(request, cat_slug):
     }
     return render(request, 'home_linen.html', data)
 
+
+def reviews(request):
+    global reviews
+    if request.method == 'POST':
+        form = AddReview(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('reviews')
+            except:
+                pass
+    else:
+        form = AddReview()
+        reviews = Reviews.objects.order_by('?')[:5]
+    return render(request, 'reviews.html', {'form': form, 'reviews': reviews, })

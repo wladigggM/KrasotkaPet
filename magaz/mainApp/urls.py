@@ -26,4 +26,5 @@ urlpatterns = [
     path('category/', category),
     path('sale/', sale),
     path('category/<slug:cat_slug>/', home_linen),
+    path('reviews/', reviews),
 ]
