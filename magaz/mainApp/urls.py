@@ -27,4 +27,4 @@ urlpatterns = [
     path('sale/', sale),
     path('category/<slug:cat_slug>/', home_linen),
     path('reviews/', reviews),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

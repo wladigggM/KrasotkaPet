@@ -8,7 +8,11 @@
 				{% for item in items %}
 					<li style="text-align:center; margin: 20px;">
 						<a class="category" href="#">
-							<img src="{% static 'mainApp/img/юбка.png' %}" alt>
+							{% if item.image %}
+                                <img src="{{item.image.url}}" alt="Картинка">
+                        {% else %}
+                                <img class="movie_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+                        {% endif %}
 							<br>
 							<p>{{item.name}}</p>
 							<p>{{item.price}}руб</p>
