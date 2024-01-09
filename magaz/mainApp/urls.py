@@ -23,8 +23,8 @@ from mainApp.views import *
 urlpatterns = [
     path('', index),
     path('about/', about),
-    path('category/', category),
+    path('category/', Categorys.as_view(), name='category'),
     path('sale/', sale),
-    path('category/<slug:cat_slug>/', home_linen),
-    path('reviews/', reviews),
+    path('category/<slug:cat_slug>/', ItemsView.as_view(), name='items'),
+    path('reviews/', ReviewsListView.as_view(), name='reviews'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
