@@ -75,7 +75,7 @@ class ReviewsListView(ListView):
         return self.get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Reviews.objects.order_by('?')[:5]
+        return Reviews.objects.order_by('?')[:5] # ДОБАВИТЬ В БД ID_USER
 
 
 # def reviews(request):

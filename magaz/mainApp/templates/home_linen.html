@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-		<section>
+		<section class="item-section">
 			<ul>
 				{% for item in items %}
-					<li style="text-align:center; margin: 20px;">
+					<li style="text-align:center; margin: 20px;" class="item_list">
 						<a class="category" href="#">
 							{% if item.image %}
-                                <img src="{{item.image.url}}" alt="Картинка">
+                                <img src="{{item.image.url}}" alt="Картинка" class="item_img">
                         {% else %}
-                                <img class="movie_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+                                <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
                         {% endif %}
 							<br>
 							<p>{{item.name}}</p>

@@ -11,16 +11,18 @@
     </div>
   {% endfor %}
 </div>
-<div class="form-container">
-    <h1>Оставить отзыв</h1>
-
-
-    <form action="" method="POST">
+        <!-- УСЛОВИЕ НА ВОЗМОЖНОСТЬ ОТПРАВИТЬ ОТЗЫВ -->
+    {% if user.is_authenticated %}
+        <div class="form-container">
+            <h1>Оставить отзыв</h1>
+            <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p}}
-        <button type="submit" class="btn btn-primary">Отправить</button>
-    </form>
-
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+    {% else %}
+        <h1 style="text-align:center; color: #333">Не авторизированные пользователи не могут оставлять отзывы !</h1>
+    {% endif %}
 <!--    <form action="" method="post">-->
 <!--        {% csrf_token %}-->
 <!--        <label for="name">Имя:</label>-->

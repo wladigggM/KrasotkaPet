@@ -4,6 +4,14 @@
     margin: 0;
     padding: 0;
 }
+body, html{
+    height: 100%;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     margin: 0;
@@ -11,10 +19,17 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #292b2c;
-    background-color: white;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: 'Montserrat', 'Ubuntu', sans-serif;
     overflow-x: hidden;
 }
+/* DARK MODE */
+.dark-mode{
+    color: white;
+    background-color: #333;
+}
+
 
 .form-container{
     text-align: center;
@@ -30,12 +45,7 @@ hr {
 
 a {
     text-decoration: none;
-    color: white;
-}
-
-h1 {
-    font-size: 2em;
-    margin: .67em 0;
+    color: #333;
 }
 
 /* Стили для шапки */
@@ -55,59 +65,102 @@ header {
 }
 
 .logo {
-    padding: 10px;
     max-width: 10%;
+    margin-bottom: 24px;
+}
+.header_nav {
+    color: #333;
+    position: relative;
+    height: 150px;
+    background-color: rgb(251 221 237);
+    border: 1px solid #3333333d;
 }
 
 nav ul {
-    height: 100px;
-    background-color: rgb(251 221 237);
+    padding-top: 30px;
+    display: flex;
     list-style: none;
-    margin: 0;
-    padding: 10px 0px;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
+.main_nav {
+    margin: 30px;
+    vertical-align: top;
+    width: 20%;
+}
+main {
+    margin-top: 100px;
+    min-height: auto;
+}
+
+.nav_cat {
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+    font-size: 25px;
+    letter-spacing: 0;
+    display: inline-block; /* Обеспечивает правильное применение transform */
+}
+
+.nav_cat:hover {
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
+    transform: perspective(500px) scale(1.5); /* Приближение к монитору с использованием perspective */
 }
 
 /* Стили для основного контента */
-main {
-    margin-top: 2%;
-    padding: 20px;
-}
-
-section {
-    margin: 40px;
-}
 
 h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+section h2 {
+    margin-top: 10%;
+    color: #333;
 }
 
 ul {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start;;
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-li {
+.item_list{
     margin: 30px;
     vertical-align: top;
     width: 20%;
+    transition: transform 0.3s ease-in-out;
+}
+.item_list:hover{
+    transform: scale(1.05);
 }
 
+.cat_list{
+    margin: 30px;
+    vertical-align: top;
+    width: 20%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cat_list:hover{
+    transform: scale(1.05);
+}
 img {
     max-width: 100%;
-
 }
 
+.item_img{
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    width: 250px;
+    height: 360px;
+}
 h3 {
     font-size: 18px;
     margin-bottom: 10px;
@@ -135,23 +188,23 @@ button:hover {
 footer {
     margin-top: 20px;
     padding: 10px;
-    background-color: #d9d9d9;
-    color: #fff;
+    background-color: rgb(251 221 237);
+    color: #333;
     text-align: center;
     bottom: 0;
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    border-top: 1px solid #3333333d  ;
 }
 
-footer h2,
-footer p,
-.category {
-    color: black;
+iframe{
+    margin-bottom: 30px;
+    border: 1px solid #3333333d;
+    border-radius: 10px;
 }
-
 .iframe {
-    background-color: #d9d9d9;
+    background-color: rgb(251 221 237);
     display: flex;
     justify-content: center;
 }
@@ -164,7 +217,8 @@ footer p,
 }
 
 .product {
-    width: 25%;
+    width: 250px;
+    margin: 20px;
     margin-bottom: 20px;
     padding: 20px;
     text-align: center;
@@ -172,7 +226,7 @@ footer p,
 
 .product img {
     max-width: 100%;
-    height: auto;
+    height: 250px;
     margin-bottom: 10px;
 }
 
@@ -205,7 +259,9 @@ footer p,
     justify-content: space-around;
     padding: 20px;
   }
-/* СТИЛИ ДЛЯ ОТЗЫВОВ */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+                                        /* СТИЛИ ДЛЯ ОТЗЫВОВ */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .review {
     width: 300px;
     margin: 15px;
@@ -233,4 +289,145 @@ footer p,
     color: #555;
     font-size: 1.2em;
     margin-bottom: 5px;
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+                                           /* АВТОРИЗАЦИЯ */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.sign_in_out{
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 20px;
+    height: 24px;
+}
+
+.last {
+    color: black;
+    list-style-type: none;
+    margin-right: 20px;
+}
+
+.login-link, .register-link,logout-link {
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+    margin-right: 10px;
+}
+
+.login-link:hover, .register-link:hover,logout-link {
+    text-decoration: underline;
+    color: #007bff;
+}
+.logout-link{
+    font-size: 12px
+}
+.username {
+    /* Добавьте стили, которые хотите применить к username */
+    font-weight: bold;
+    color: rgb(255 137 200); /* Например, розовый цвет */
+    font-size: 40px;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.username:hover {
+    color: #ff69b4; /* Например, розовый цвет при наведении */
+    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5); /* Небольшая тень */
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.auth_form {
+    display: flex;
+    background-color: rgb(251 221 237);
+    height: 400px;
+    width: 410px;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #3333333d  ;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth_form.errorlist {
+    height: auto;
+}
+
+.auth_form p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth_form label {
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.auth_form input {
+    width: 80%;
+    height: 40px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.auth_form input:focus {
+    border-color: #007bff; /* Цвет рамки при фокусе */
+    outline: none;
+}
+
+.auth_submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.auth_submit:hover {
+    background-color: #0056b3;
+}
+.auth_submit:active {
+    background-color: #333;
+}
+
+.auth_form ul {
+    justify-content: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+}
+
+.auth_form ul.errorlist {
+    color: red;
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.5);
+}
+
+.auth_footer {
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.res_pass_q {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333; /* цвет ссылки */
+    text-decoration: none;
+}
+
+.res_pass_q:hover {
+    text-decoration: underline;
+    color: #007bff;
 }

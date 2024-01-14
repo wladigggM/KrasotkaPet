@@ -1,0 +1,11 @@
+{% extends "base_auth.html" %}
+{% load static %}
+{% block content %}
+<form method="POST" class="auth_form">
+    {% csrf_token  %}
+    {{form.as_p}}
+    <p><input type="submit" class="auth_submit" value="Войти"></p>
+    <p><a href="" class="res_pass_q">Забыли пароль ?</a></p>
+
+</form>
+{% endblock %}
