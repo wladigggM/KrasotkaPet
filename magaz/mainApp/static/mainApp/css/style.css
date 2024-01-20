@@ -3,6 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    transition: background-color 1s ease, color 1s ease;
 }
 body, html{
     height: 100%;
@@ -24,12 +25,6 @@ body {
     font-family: 'Montserrat', 'Ubuntu', sans-serif;
     overflow-x: hidden;
 }
-/* DARK MODE */
-.dark-mode{
-    color: white;
-    background-color: #333;
-}
-
 
 .form-container{
     text-align: center;
@@ -50,7 +45,6 @@ a {
 
 /* Стили для шапки */
 header {
-    height: 30%;
     text-align: center;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -62,6 +56,7 @@ header {
     z-index: 1;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    margin-bottom: 3%;
 }
 
 .logo {
@@ -95,6 +90,8 @@ main {
     min-height: auto;
     max-width: 1170px;
     margin: auto;
+    border-right: 1px solid rgb(251 221 237);
+    border-left: 1px solid rgb(251 221 237);
 }
 
 .nav_cat {
@@ -118,7 +115,6 @@ h2 {
     margin-bottom: 40px;
 }
 section h2 {
-    margin-top: 10%;
     color: #333;
 }
 
@@ -257,7 +253,7 @@ iframe{
 .reviews {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding: 20px;
   }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -311,11 +307,13 @@ iframe{
     text-decoration: none;
     font-family: 'Arial', sans-serif;
     margin-right: 10px;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .login-link:hover, .register-link:hover,logout-link {
-    text-decoration: underline;
-    color: #007bff;
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
+    transform: perspective(500px) scale(1.5);
 }
 .logout-link{
     font-size: 12px
@@ -432,3 +430,16 @@ iframe{
     text-decoration: underline;
     color: #007bff;
 }
+
+/* КНОПКА ТЕМЫ*/
+.theme-selector {
+    display: block;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+/*- - - - - -*/
