@@ -1,6 +1,4 @@
 const themeSelector = document.querySelector('.theme-selector');
-const linkElement = document.querySelector('link[rel="stylesheet"]');
-const themeButton = document.querySelector('.theme-selector');
 
 // Функция для установки стилей в зависимости от значения в localStorage
 function setThemeFromLocalStorage() {
@@ -13,26 +11,26 @@ function setThemeFromLocalStorage() {
 // Функция для обновления стилей и сохранения в localStorage
 function updateAndSaveTheme() {
     if (linkElement.href.includes('/static/mainApp/css/style.css')) {
-        themeButton.value = '\u{1F31A}';
+        themeSelector.value = '\u{1F31A}';
         linkElement.href = '/static/mainApp/css/dark_mode.css';
         localStorage.setItem('selectedTheme', '/static/mainApp/css/dark_mode.css');
     } else {
-        themeButton.value = '\u{1F31D}';
+        themeSelector.value = '\u{1F31D}';
         linkElement.href = '/static/mainApp/css/style.css';
         localStorage.setItem('selectedTheme', '/static/mainApp/css/style.css');
     }
 }
 
 // Обработчик клика по селектору темы
-function themeSelectorClickHandler() {
-    themeSelector.addEventListener('click', function() {
-        updateAndSaveTheme();
-    });
-}
+//function themeSelectorClickHandler() {
+//    themeSelector.addEventListener('click', function() {
+//        updateAndSaveTheme();
+//    });
+//}
+
 
 // Вызов функции для установки стилей при загрузке страницы
-setThemeFromLocalStorage();
-
+document.addEventListener('DOMContentLoaded', setThemeFromLocalStorage)
 // Вызов функции для обработки клика по селектору темы
 themeSelectorClickHandler();
 

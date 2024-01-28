@@ -21,10 +21,11 @@ from magaz import settings
 from mainApp.views import *
 
 urlpatterns = [
-    path('', index),
+    path('', Index.as_view(), name='index'),
     path('about/', about),
     path('category/', Categorys.as_view(), name='category'),
     path('sale/', sale),
     path('category/<slug:cat_slug>/', ItemsView.as_view(), name='items'),
     path('reviews/', ReviewsListView.as_view(), name='reviews'),
+    path('category/<slug:cat_slug>/<slug:item_slug>/', AboutItemView.as_view(), name='item')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,11 +3,11 @@
 {% block content %}
 <form method="POST" class="auth_form">
     {% csrf_token  %}
-    {{form.as_p}}
+        <div class="errorlist">{{ form.errors}}</div>
+    {% for f in form %}
+        <p><label>{{f.label}}</label></p> <p>{{f}}</p>
+    {% endfor %}
     <p><input type="submit" value="Зарегистрироваться" class="auth_submit"></p>
       <p><a href="http://127.0.0.1:8000/users/login/">Уже зарегестрирован?</a></p>
 </form>
-<footer class="auth_footer">
-
-</footer>
 {% endblock %}

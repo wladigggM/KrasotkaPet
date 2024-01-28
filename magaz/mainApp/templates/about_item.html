@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% for item in items %}
+        <div class="product_item">
+            <div class="description">
+                <h2>{{ item.name }}</h2>
+							{% if item.image %}
+                                <img class="product_img" src="{{item.image.url}}" alt="Картинка" class="item_img">
+                        {% else %}
+                                <img class="product_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+                        {% endif %}
+                <p class="price">Стоимость: <br>{{ item.price }}р</p>
+            </div>
+            <div class="description_item">
+                <p>Описание товара:<hr>{{ item.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

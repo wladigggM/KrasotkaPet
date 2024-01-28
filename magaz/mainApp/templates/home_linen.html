@@ -5,7 +5,7 @@
 			<ul>
 				{% for item in items %}
 					<li style="text-align:center; margin: 20px;" class="item_list">
-						<a class="category" href="#">
+						<a class="category" href="http://127.0.0.1:8000/category/{{item.slug_name}}/{{item.item_slug}}/">
 							{% if item.image %}
                                 <img src="{{item.image.url}}" alt="Картинка" class="item_img">
                         {% else %}

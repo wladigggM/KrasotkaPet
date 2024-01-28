@@ -3,7 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    transition: background-color 1s ease, color 1s ease;
+/*    transition: background-color 1s ease, color 1s ease;*/
 }
 body, html{
     height: 100%;
@@ -108,9 +108,9 @@ main {
 }
 
 .nav_cat:hover {
-    color: #e5e5e5;
+    color: #ff69b4;
     text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
-    transform: perspective(500px) scale(1.2); /* Приближение к монитору с использованием perspective */
+    transform: perspective(500px) scale(1.5); /* Приближение к монитору с использованием perspective */
 }
 
 /* Стили для основного контента */
@@ -191,24 +191,24 @@ button:hover {
 footer {
     margin-top: 20px;
     padding: 10px;
-    background-color: #15151a;
+    background-color: #333;
     color: rgb(146, 110, 129);
     text-align: center;
     bottom: 0;
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border-top: 1px solid rgb(175 117 148)  ;
+    border-top: 1px solid rgb(146, 110, 129)  ;
 }
 
 iframe{
     margin-bottom: 30px;
-    border: 5px solid rgb(175 117 148);
+    border: 1px solid #3333333d;
     border-radius: 10px;
 }
 .iframe {
-    background-color: #15151a;
-    color: rgb(175 117 148);
+    background-color: #333;
+    color: rgb(146, 110, 129);
     display: flex;
     justify-content: center;
 }
@@ -274,24 +274,24 @@ iframe{
     border: 1px solid rgb(146, 110, 129);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #15151a;
+    background-color: #333;
     transition: transform 0.3s ease-in-out;
 }
 .review:hover {
     transform: scale(1.05);
 }
 .review-name {
-    color: rgb(175 117 148);
+    color: rgb(146, 110, 129);
     font-size: 1.5em;
     margin-bottom: 10px;
 }
 .review-rating {
-    color: rgb(175 117 148); /* Цвет звезд рейтинга */
+    color: #ff9800; /* Цвет звезд рейтинга */
     font-size: 1.2em;
     margin-bottom: 5px;
 }
 .review-comment {
-    color: rgb(175 117 148);
+    color: rgb(146, 110, 129);
     font-size: 1.2em;
     margin-bottom: 5px;
 }
@@ -443,7 +443,7 @@ iframe{
     cursor: pointer;
     padding: 10px;
     border: none;
-    background-color: #15151a;
+    background-color: #333;
     color: #fff;
     border-radius: 5px;
 /*    transition: background-color 0.3s ease, color 0.3s ease;*/
