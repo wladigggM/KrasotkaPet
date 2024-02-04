@@ -22,9 +22,9 @@ from mainApp.views import *
 
 urlpatterns = [
     path('', Index.as_view(), name='index'),
-    path('about/', about),
+    path('about/', About.as_view(), name='about'),
     path('category/', Categorys.as_view(), name='category'),
-    path('sale/', sale),
+    path('sale/', Sales.as_view(), name='sale'),
     path('category/<slug:cat_slug>/', ItemsView.as_view(), name='items'),
     path('reviews/', ReviewsListView.as_view(), name='reviews'),
     path('category/<slug:cat_slug>/<slug:item_slug>/', AboutItemView.as_view(), name='item')

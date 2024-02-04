@@ -1,21 +1,26 @@
+from django.core.paginator import Paginator
 from django.db.models import Max
 from django.http import request
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.utils import timezone
+from django.views.generic import ListView, TemplateView
 from .forms import *
 from .models import *
 
 
 # Create your views here.
-# def index(request):
-#     return render(request, 'index.html')
+
 class Index(ListView):
-    model = Category  # Тут должна быть модель с новинками
-    template_name = 'index.html'
+
+    def get(self, request, *args, **kwargs):
+        thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
+        new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
+
+        return render(request, 'index.html', {'items': new_items})
 
 
-def about(request):
-    return render(request, 'about.html')
+class About(TemplateView):
+    template_name = 'about.html'
 
 
 class Categorys(ListView):
@@ -34,8 +39,8 @@ class Categorys(ListView):
 #     return render(request, 'category.html', data)
 
 
-def sale(request):
-    return render(request, 'sale.html')
+class Sales(TemplateView):
+    template_name = 'sale.html'
 
 
 class ItemsView(ListView):
