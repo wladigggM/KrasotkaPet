@@ -29,6 +29,7 @@
             <input type="button" class="theme-selector" value="&#x1F31D;">
     </div>
     <h1>
+        <a href="{% url 'purchase:cart' %}" class="">КОРЗИНА</a>
         <span class="sign_in_out">
         {% if user.is_authenticated %}
             <li class="last">

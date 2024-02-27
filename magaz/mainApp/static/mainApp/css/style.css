@@ -133,7 +133,7 @@ ul {
     width: 20%;
     transition: transform 0.3s ease-in-out;
 }
-.item_list:hover{
+.item_img:hover{
     transform: scale(1.05);
 }
 
@@ -465,4 +465,103 @@ iframe{
 .description_item {
     margin-left: 20%;  /* Добавляем отступ слева */
 }
-/*- - - -*/
+/* - - - КОРЗИНА - - - */
+
+/* Стили для основного контейнера */
+.cart_container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для заголовка */
+.cart_container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Стили для таблицы */
+.cart_container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Стили для заголовков таблицы */
+.cart_container th, .cart_container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart_container th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Стили для данных в таблице */
+.cart_container td {
+    vertical-align: middle;
+}
+
+/* Стили для общего итога */
+.cart_container .total {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+}
+
+.cart_container .total strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Стили для ссылки оформления заказа */
+.cart_container a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cart_container a:hover {
+    background-color: #45a049;
+}
+
+/* Стили для блока неавторизованного пользователя */
+.not_authorized {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.not_authorized a {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.not_authorized a:hover {
+    text-decoration: underline;
+}
+
+.add_in_cart {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(251, 221, 237);
+    color: #000; /* Цвет текста */
+    text-decoration: none;
+    border: 1px solid #000; /* Обводка кнопки */
+    border-radius: 5px; /* Скругление углов */
+    font-family: Arial, sans-serif;
+}
+
+.add_in_cart:hover {
+    background-color: #f9c6d3; /* Цвет фона при наведении */
+}

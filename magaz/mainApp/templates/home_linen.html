@@ -14,6 +14,7 @@
 							<br>
 							<p>{{item.name}}</p>
 							<p>{{item.price}}руб</p>
+							<a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
 
 						</a>
 					</li>

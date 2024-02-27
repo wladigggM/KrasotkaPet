@@ -1,0 +1,37 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+{% block content %}
+<div class="cart_container">
+    <h1>Корзина товаров</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Название товара</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+        </tr>
+        </thead>
+        {% for cart in carts %}
+        <tbody>
+        <tr>
+            <td>{{cart.product.name}}</td>
+            <td>{{cart.product.price}} р.</td>
+            <td>{{cart.quantity}}</td>
+            <td>{{cart.product_price}} р.</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <div class="total">
+        Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
+        Итого: <span><strong> {{carts.total_price}} руб</strong></span>
+    </div>
+    <div>
+        <a href="#" methods="#" class="">Оформить заказ</a>
+    </div>
+</div>
+<div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
+    <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
+</div>
+{% endblock %}

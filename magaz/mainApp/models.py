@@ -23,6 +23,7 @@ class Item(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     slug_name = models.CharField(max_length=100, default='slug_name', verbose_name='Слаг (форен кей)')
     item_slug = models.CharField(max_length=100, default='item_slug', verbose_name='Слаг (предмета)')
+    discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2,verbose_name='Скидка')
 
     def __str__(self):
         return self.name
@@ -32,6 +33,10 @@ class Item(models.Model):
             self.category = Category.objects.get(name='Домашняя одежда')
         super().save(*args, **kwargs)
 
+    def sell_price(self):
+        if self.discount:
+            return round(self.price - self.price * self.discount/100, 2)
+        return self.price
     class Meta:
         verbose_name = 'Вещи'
         verbose_name_plural = 'Вещи'

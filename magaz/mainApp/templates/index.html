@@ -3,56 +3,23 @@
 {% block content %}
 		<section>
 			<h2 style="text-align: center">Новинки</h2>
-			<ul class="products">
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 1">
-					<h3>Одежда 1</h3>
-					<p>Цена: 1000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 2">
-					<h3>Одежда 2</h3>
-					<p>Цена: 2000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 3">
-					<h3>Одежда 3</h3>
-					<p>Цена: 3000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 4">
-					<h3>Одежда 4</h3>
-					<p>Цена: 4000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 3">
-					<h3>Одежда 3</h3>
-					<p>Цена: 3000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 3">
-					<h3>Одежда 3</h3>
-					<p>Цена: 3000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 3">
-					<h3>Одежда 3</h3>
-					<p>Цена: 3000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-				<li class="product">
-					<img src="{% static 'mainApp/img/p_zaglushka.png' %}" alt="Одежда 3">
-					<h3>Одежда 3</h3>
-					<p>Цена: 3000 руб.</p>
-					<button>Добавить в корзину</button>
-				</li>
-
-			</ul>
+				<ul class="products">
+					{% if items %}
+						{%for item in items %}
+							<li class="product">
+								{% if item.image %}
+                                	<img src="{{item.image.url}}" alt="Картинка" class="item_img">
+                        		{% else %}
+                                	<img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+                        		{% endif %}
+								<h3>{{item.name}}</h3>
+								<p>{{item.price}}</p>
+								<a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+							</li>
+						{% endfor %}
+					{% else %}
+						<p>На данный момент новинки отсутствуют</p>
+					{% endif %}
+				</ul>
 		</section>
 {% endblock %}
