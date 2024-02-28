@@ -1,24 +1,35 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-		<section class="item-section">
-			<ul>
-				{% for item in items %}
-					<li style="text-align:center; margin: 20px;" class="item_list">
-						<a class="category" href="http://127.0.0.1:8000/category/{{item.slug_name}}/{{item.item_slug}}/">
-							{% if item.image %}
-                                <img src="{{item.image.url}}" alt="Картинка" class="item_img">
-                        {% else %}
-                                <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+<section>
+    <div class="item-section">
+        <ul class="item_list">
+            {% for item in items %}
+            <li style="text-align:center; margin: 20px;" class="item_list_item">
+                <a class="category" href="http://127.0.0.1:8000/category/{{item.slug_name}}/{{item.item_slug}}/">
+                    {% if item.image %}
+                    <img src="{{item.image.url}}" alt="Картинка" class="item_img">
+                    {% else %}
+                    <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+                    {% endif %}
+                    <br>
+                    <p>{{ item.name }}</p>
+                    {% if not item.discount %}
+                    <p>{{ item.price }} руб</p>
+                    {% endif %}
+                    <div class="pice_cart">
+                        {% if item.discount %}
+                        <p class="original-price">{{ item.price }} руб</p>
+                        <b><p class="discounted-price">Со скидкой</p></b>
+                        <p>{{ item.sell_price }} руб</p>
                         {% endif %}
-							<br>
-							<p>{{item.name}}</p>
-							<p>{{item.price}}руб</p>
-							<a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+                        <a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+                    </div>
 
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
-		</section>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

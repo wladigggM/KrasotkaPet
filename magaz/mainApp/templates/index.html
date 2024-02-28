@@ -1,29 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-		<section>
-			<h2 style="text-align: center">Новинки</h2>
-				<ul class="products">
-					{% if items %}
-						{%for item in items %}
-							<li class="product">
-								{% if item.image %}
-                                	<img src="{{item.image.url}}" alt="Картинка" class="item_img">
-                        		{% else %}
-                                	<img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
-                        		{% endif %}
-								<h3>{{item.name}}</h3>
-								<p>{{item.price}}</p>
-<<<<<<< HEAD
-								<a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
-=======
-								<button>Добавить в корзину</button>
->>>>>>> a6c3700af1af1564d0a2518087ec51852841f64f
-							</li>
-						{% endfor %}
-					{% else %}
-						<p>На данный момент новинки отсутствуют</p>
-					{% endif %}
-				</ul>
-		</section>
+<h2 style="text-align: center">Новинки</h2>
+<section class="item-section">
+    <ul class="item_list">
+        {% if items %}
+        {%for item in items %}
+        <li class="item_list_item">
+            {% if item.image %}
+            <img src="{{item.image.url}}" alt="Картинка" class="item_img">
+            {% else %}
+            <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
+            {% endif %}
+            <h3>{{item.name}}</h3>
+            <p>{{item.price}}</p>
+            <a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>На данный момент новинки отсутствуют</p>
+        {% endif %}
+    </ul>
+</section>
 {% endblock %}
