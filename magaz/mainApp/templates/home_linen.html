@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<section>
-    <div class="item-section">
+<h1 style="text-align:center; color: #333;">{{cat_name}}</h1>
+<section class="item-section">
         <ul class="item_list">
             {% for item in items %}
             <li style="text-align:center; margin: 20px;" class="item_list_item">
@@ -30,6 +30,5 @@
             </li>
             {% endfor %}
         </ul>
-    </div>
 </section>
 {% endblock %}

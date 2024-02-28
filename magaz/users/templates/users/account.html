@@ -1,12 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>ACCOUNT PAGE</h1>
-    <h1>Привет, {{ user.username}}!</h1>
-    <h1><a href="/">На главную</a></h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="acc_container">
+    <div class="user-details">
+        <h2>Здравствуйте, {{user.username}} !</h2>
+        <p><b>Ваш email: </b> {{user.email}}</p>
+        <hr>
+        <p>Тут вы можете заполнить дополнительную информацию о себе</p>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <label for="first-name">Имя:</label><br>
+            <input type="text" id="first-name" name="first-name"><br>
+            <label for="last-name">Фамилия:</label><br>
+            <input type="text" id="last-name" name="last-name"><br>
+            <label for="photo">Загрузить фото:</label><br>
+            <input type="file" id="photo" name="photo"><br>
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
+    <div class="cart_container" style="margin:0;">
+        <h2>Корзина:</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Название товара</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for cart in carts %}
+            <tbody>
+            <tr>
+                <td>{{cart.product.name}}</td>
+                <td>{{cart.product.price}} р.</td>
+                <td>{{cart.quantity}}</td>
+                <td>{{cart.product_price}} р.</td>
+                <td><a href="#" class="trash"><img src="{% static 'mainApp/img/корзина.png' %}"></a></td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        <div class="total">
+            Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
+            Итого: <span><strong> {{carts.total_price}} руб</strong></span>
+        </div>
+        <div>
+            <a href="#" methods="#" class="compleat">Оформить заказ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

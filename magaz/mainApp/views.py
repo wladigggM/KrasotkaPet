@@ -29,51 +29,40 @@ class Categorys(ListView):
     context_object_name = 'categories'
 
 
-#    extra_context = {'tittle': 'Категории'}
-
-# def category(request):
-#     categories = Category.objects.all()
-#     data = {
-#         "categories": categories
-#     }
-#     return render(request, 'category.html', data)
-
-
 class Sales(TemplateView):
     template_name = 'sale.html'
 
 
 class ItemsView(ListView):
-    model = Item
-    template_name = 'home_linen.html'
-    context_object_name = 'items'
     paginate_by = 10
 
-    def get_queryset(self):
-        return Item.objects.filter(slug_name=self.kwargs['cat_slug'])
+    def get(self, request, *args, **kwargs):
+        cat_items = Item.objects.filter(slug_name=self.kwargs['cat_slug'])
+        cat_name = Category.objects.filter(slug_name=self.kwargs['cat_slug'])
+        data = {
+            'items': cat_items,
+            'cat_name': cat_name[0],
+        }
+
+        return render(request, 'home_linen.html', data)
 
 
 class AboutItemView(ListView):
-    model = Item
     template_name = 'about_item.html'
     context_object_name = 'items'
 
-    def get_queryset(self):
-        item_slug = self.kwargs['item_slug']
-        cat_slug = self.kwargs['cat_slug']
+    def get(self, request, *args, **kwargs):
+        queryset = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
+        item = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
 
-        queryset = Item.objects.filter(item_slug=item_slug, slug_name=cat_slug)
-        return queryset
+        data = {
+            'queryset': queryset,
+            'item': item[0]
 
+        }
 
-# def home_linen(request, cat_slug):
-#     categories = Category.objects.filter(slug_name=cat_slug)  # edit
-#     items = Item.objects.filter(slug_name=cat_slug)  # edit
-#     data = {
-#         "categories": categories,
-#         "items": items
-#     }
-#     return render(request, 'home_linen.html', data)
+        return render(request, 'about_item.html', data)
+
 
 class ReviewsListView(ListView):
     model = Reviews

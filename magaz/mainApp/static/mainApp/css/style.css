@@ -426,10 +426,6 @@ iframe{
     height: auto;
 }
 
-.description {
-
-}
-
 .price {
     text-align: center;
 }
@@ -492,7 +488,7 @@ iframe{
 }
 
 /* Стили для ссылки оформления заказа */
-.cart_container a {
+.compleat {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
@@ -503,7 +499,7 @@ iframe{
     transition: background-color 0.3s;
 }
 
-.cart_container a:hover {
+.compleat:hover {
     background-color: #45a049;
 }
 
@@ -525,11 +521,11 @@ iframe{
 
 .add_in_cart {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 3px;
     background-color: rgb(251, 221, 237);
-    color: #000; /* Цвет текста */
+    color: #333; /* Цвет текста */
     text-decoration: none;
-    border: 1px solid #000; /* Обводка кнопки */
+    border: 0.5px solid #3336; /* Обводка кнопки */
     border-radius: 5px; /* Скругление углов */
     font-family: Arial, sans-serif;
 }
@@ -549,4 +545,84 @@ iframe{
     color: rgb(255, 204, 229); /* Цвет текста для цены со скидкой */
     border: 1px solid;
     text-shadow: 1px 1px 2px rgb(0 0 0);
+}
+
+/* - - - - - - - - - - - - - */
+/* - АККАУНТ -*/
+/* Общие стили для контейнера и его дочерних элементов */
+.acc_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #3363;
+    border-radius: 10px;
+}
+
+/* Стили для блока с деталями пользователя */
+.user-details {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.user-details h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.user-details form {
+    width: 100%;
+}
+
+.user-details label {
+    font-weight: bold;
+}
+
+.user-details input[type="text"],
+.user-details input[type="file"],
+.user-details input[type="submit"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.user-details input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-details input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для блока с корзиной */
+.cart {
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.cart h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.trash {
+}
+.trash img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.trash img:hover {
+    background-color: #45a049;
 }

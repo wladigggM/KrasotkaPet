@@ -10,6 +10,7 @@
             <th>Цена</th>
             <th>Количество</th>
             <th>Сумма</th>
+            <th></th>
         </tr>
         </thead>
         {% for cart in carts %}
@@ -19,6 +20,7 @@
             <td>{{cart.product.price}} р.</td>
             <td>{{cart.quantity}}</td>
             <td>{{cart.product_price}} р.</td>
+            <td><a href="#" class="trash"><img src="{% static 'mainApp/img/корзина.png' %}"></a></td>
         </tr>
         </tbody>
         {% endfor %}
@@ -27,11 +29,14 @@
         Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
         Итого: <span><strong> {{carts.total_price}} руб</strong></span>
     </div>
+    {% if user.is_authenticated %}
     <div>
-        <a href="#" methods="#" class="">Оформить заказ</a>
+        <a href="#" methods="#" class="compleat">Оформить заказ</a>
     </div>
-</div>
-<div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
+    {% else %}
+    <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
     <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
+</div>
+    {% endif %}
 </div>
 {% endblock %}

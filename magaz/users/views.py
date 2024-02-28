@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
+from cart.models import Cart
 from users.forms import LoginUser, RegisterUserForm
 
 
@@ -26,6 +27,18 @@ class LoginUser(LoginView):
 @login_required(login_url='/users/login')
 def account(request):
     return render(request, 'users/account.html')
+
+
+class AccountView(ListView):
+
+    def get(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        carts = Cart.objects.filter(user=user_profile)
+        data = {
+            'user': user_profile,
+            'carts': carts,
+        }
+        return render(request, 'users/account.html', data)
 
 
 class RegisterUser(CreateView):
