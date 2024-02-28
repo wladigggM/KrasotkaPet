@@ -14,7 +14,11 @@
                         		{% endif %}
 								<h3>{{item.name}}</h3>
 								<p>{{item.price}}</p>
+<<<<<<< HEAD
 								<a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+=======
+								<button>Добавить в корзину</button>
+>>>>>>> a6c3700af1af1564d0a2518087ec51852841f64f
 							</li>
 						{% endfor %}
 					{% else %}
