@@ -5,20 +5,24 @@
     <h1>Корзина товаров</h1>
     <table>
         <thead>
-        <tr>
-            <th>Название товара</th>
-            <th>Цена</th>
-            <th>Количество</th>
-            <th>Сумма</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>Название товара</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+                <th></th>
+            </tr>
         </thead>
         {% for cart in carts %}
         <tbody>
         <tr>
             <td>{{cart.product.name}}</td>
             <td>{{cart.product.price}} р.</td>
-            <td>{{cart.quantity}}</td>
+            <td>
+                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="increase">+</button>
+                {{ cart.quantity }}
+                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="decrease">-</button>
+            </td>
             <td>{{cart.product_price}} р.</td>
             <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img
                     src="{% static 'mainApp/img/корзина.png' %}"></a></td>

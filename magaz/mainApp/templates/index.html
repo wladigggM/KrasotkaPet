@@ -12,6 +12,7 @@
             {% else %}
             <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
             {% endif %}
+            <p>{{ item.name }}</p>
                     {% if not item.discount %}
                     <p>{{ item.price }} руб</p>
                     {% endif %}

@@ -187,7 +187,6 @@ button {
     border: none;
     color: #fff;
     cursor: pointer;
-    padding: 10px 20px;
     font-size: 18px;
     transition: background-color 0.3s ease;
 }
@@ -466,10 +465,11 @@ iframe{
 }
 
 .cart_container th {
-    background-color: #f2f2f2;
     font-weight: bold;
 }
-
+.cart_container thead {
+    background-color: rgb(251 221 237);
+}
 /* Стили для данных в таблице */
 .cart_container td {
     vertical-align: middle;
@@ -492,9 +492,10 @@ iframe{
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
+    background-color: rgb(251 221 237);
+    color: #333;
     text-decoration: none;
+    border: 1px solid #3333334a;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
@@ -631,14 +632,14 @@ iframe{
 .buy_cart {
     position: fixed;
     width: 70px;
-    height: 70px;
+    height: 50px;
     background-color: rgb(251, 221, 237);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #3333334a;
-    border-radius: 50%;
+    border-radius: 20%;
     right: 20px;
     bottom: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* добавляем анимацию к свойствам transform и box-shadow */
@@ -668,4 +669,10 @@ iframe{
     justify-content: center;
     align-items: center;
     font-size: 12px;
+}
+/* - - - кнопки увеличения/уменьшения кол-ва предметов в корзине - - - -*/
+.quantity_item_btn {
+    margin: 1%;
+    width: 20px;
+    border-radius: 20%;
 }
