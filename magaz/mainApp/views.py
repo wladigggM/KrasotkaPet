@@ -1,22 +1,28 @@
 from django.core.paginator import Paginator
 from django.db.models import Max
-from django.http import request
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView
+
+from cart.models import Cart
 from .forms import *
 from .models import *
 
 
 # Create your views here.
-
 class Index(ListView):
 
     def get(self, request, *args, **kwargs):
         thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
         new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
+        carts = Cart.objects.filter(user=request.user)
 
-        return render(request, 'index.html', {'items': new_items})
+        data = {
+            'items': new_items,
+            'carts': carts,
+        }
+
+        return render(request, 'index.html', data)
 
 
 class About(TemplateView):
@@ -34,7 +40,7 @@ class Sales(TemplateView):
 
 
 class ItemsView(ListView):
-    paginate_by = 10
+    paginate_by = 8
 
     def get(self, request, *args, **kwargs):
         cat_items = Item.objects.filter(slug_name=self.kwargs['cat_slug'])

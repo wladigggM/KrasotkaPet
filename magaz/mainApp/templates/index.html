@@ -12,9 +12,17 @@
             {% else %}
             <img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
             {% endif %}
-            <h3>{{item.name}}</h3>
-            <p>{{item.price}}</p>
-            <a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+                    {% if not item.discount %}
+                    <p>{{ item.price }} руб</p>
+                    {% endif %}
+                    <div class="pice_cart">
+                        {% if item.discount %}
+                        <p class="original-price">{{ item.price }} руб</p>
+                        <b><p class="discounted-price">Скидка {{item.discount}}%</p></b>
+                        <p>{{ item.sell_price }} руб</p>
+                        {% endif %}
+                        <a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>
+                    </div>
         </li>
         {% endfor %}
         {% else %}

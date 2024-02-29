@@ -525,7 +525,7 @@ iframe{
     background-color: rgb(251, 221, 237);
     color: #333; /* Цвет текста */
     text-decoration: none;
-    border: 0.5px solid #3336; /* Обводка кнопки */
+    border: 0.5px solid #3333334a; /* Обводка кнопки */
     border-radius: 5px; /* Скругление углов */
     font-family: Arial, sans-serif;
 }
@@ -614,15 +614,58 @@ iframe{
     font-size: 24px;
 }
 
-.trash {
-}
+
 .trash img {
     width: 40px;
     height: 40px;
     object-fit: contain;
-    border-radius: 5px;
+    border-radius: 50%;
+    transition: box-shadow 1s ease, background-color 1s ease;
 }
 
 .trash img:hover {
-    background-color: #45a049;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: rgb(251, 221, 237);
+}
+
+.buy_cart {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    background-color: rgb(251, 221, 237);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #3333334a;
+    border-radius: 50%;
+    right: 20px;
+    bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* добавляем анимацию к свойствам transform и box-shadow */
+}
+
+.buy_cart:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* добавляем подсветку при наведении */
+}
+
+.buy_cart_img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+.item_count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
 }

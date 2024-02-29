@@ -20,7 +20,7 @@
                     <div class="pice_cart">
                         {% if item.discount %}
                         <p class="original-price">{{ item.price }} руб</p>
-                        <b><p class="discounted-price">Со скидкой</p></b>
+                        <b><p class="discounted-price">Скидка {{item.discount}}%</p></b>
                         <p>{{ item.sell_price }} руб</p>
                         {% endif %}
                         <a href="{% url 'purchase:cart_add' item.item_slug%}" class="add_in_cart">Добавить в корзину</a>

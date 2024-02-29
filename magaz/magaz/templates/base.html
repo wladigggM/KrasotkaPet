@@ -24,13 +24,19 @@
     });
 }
 
+
+
 </script>
 <header class="header">
     <div class="themes">
         <input type="button" class="theme-selector" value="&#x1F31D;">
     </div>
     <h1>
-        <a href="{% url 'purchase:cart' %}" class="">КОРЗИНА</a>
+        <a class="buy_cart" href="{% url 'purchase:cart' %}"><img class="buy_cart_img"
+                                                                  src="{% static 'mainApp/img/корзина_покупок.png' %}"
+                                                                  alt="Корзина">
+            <div class="item_count">{{carts.total_quantity}}</div>
+        </a>
         <span class="sign_in_out">
         {% if user.is_authenticated %}
             <li class="last">
