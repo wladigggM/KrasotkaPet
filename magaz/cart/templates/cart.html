@@ -20,7 +20,7 @@
             <td>{{cart.product.price}} р.</td>
             <td>{{cart.quantity}}</td>
             <td>{{cart.product_price}} р.</td>
-            <td><a href="#" class="trash"><img src="{% static 'mainApp/img/корзина.png' %}"></a></td>
+            <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img src="{% static 'mainApp/img/корзина.png' %}"></a></td>
         </tr>
         </tbody>
         {% endfor %}
@@ -29,9 +29,13 @@
         Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
         Итого: <span><strong> {{carts.total_price}} руб</strong></span>
     </div>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated%}
     <div>
+        {% if carts.total_quantity > 0 %}
         <a href="#" methods="#" class="compleat">Оформить заказ</a>
+        {% else %}
+        <h4 style="text-align: center;">Вы не добавили ни одного товара</h4>
+        {% endif %}
     </div>
     {% else %}
     <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">

@@ -9,14 +9,22 @@ from .forms import *
 from .models import *
 
 
+def get_cart_user(request):
+    carts = Cart.objects.none()
+
+    if request.user.is_authenticated:
+        carts = Cart.objects.filter(user=request.user)
+        print(carts)
+    return carts
+
+
 # Create your views here.
 class Index(ListView):
 
     def get(self, request, *args, **kwargs):
         thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
         new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
-        carts = Cart.objects.filter(user=request.user)
-
+        carts = get_cart_user(request)
         data = {
             'items': new_items,
             'carts': carts,
@@ -33,7 +41,7 @@ class Categorys(ListView):
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
-        carts = Cart.objects.filter(user=request.user)
+        carts = get_cart_user(request)
         data = {
             'categories': categories,
             'carts': carts
@@ -45,7 +53,7 @@ class Sales(ListView):
     template_name = 'sale.html'
 
     def get(self, request, *args, **kwargs):
-        carts = Cart.objects.filter(user=request.user)
+        carts = get_cart_user(request)
         data = {
             'carts': carts
         }
@@ -58,7 +66,7 @@ class ItemsView(ListView):
     def get(self, request, *args, **kwargs):
         cat_items = Item.objects.filter(slug_name=self.kwargs['cat_slug'])
         cat_name = Category.objects.filter(slug_name=self.kwargs['cat_slug'])
-        carts = Cart.objects.filter(user=request.user)
+        carts = get_cart_user(request)
 
         data = {
             'items': cat_items,
@@ -76,7 +84,7 @@ class AboutItemView(ListView):
     def get(self, request, *args, **kwargs):
         queryset = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
         item = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
-        carts = Cart.objects.filter(user=request.user)
+        carts = get_cart_user(request)
 
         data = {
             'queryset': queryset,
@@ -97,7 +105,7 @@ class ReviewsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AddReview()
-        carts = Cart.objects.filter(user=self.request.user)
+        carts = get_cart_user(self.request)
         context['carts'] = carts
         return context
 
@@ -112,6 +120,7 @@ class ReviewsListView(ListView):
                 # Handle the exception properly, e.g., log it or show an error message
                 print(e)  # Printing the exception for debugging purposes
         return self.get(request, *args, **kwargs)
+
     def get_queryset(self):
         return Reviews.objects.order_by('?')[:6]  # ДОБАВИТЬ В БД ID_USER
 
