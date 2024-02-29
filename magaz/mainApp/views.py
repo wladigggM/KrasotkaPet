@@ -100,7 +100,7 @@ class ReviewsListView(ListView):
     model = Reviews
     template_name = 'reviews.html'
     context_object_name = 'reviews'
-    paginate_by = 6
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

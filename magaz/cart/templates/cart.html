@@ -19,9 +19,9 @@
             <td>{{cart.product.name}}</td>
             <td>{{cart.product.price}} р.</td>
             <td>
-                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="increase">+</button>
-                {{ cart.quantity }}
                 <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="decrease">-</button>
+                {{ cart.quantity }}
+                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="increase">+</button>
             </td>
             <td>{{cart.product_price}} р.</td>
             <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img
