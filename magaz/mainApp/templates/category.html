@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h2 style="text-align:center; color: #333;">Категории</h2>
 		<section class="item-section">
+			<h2 style="text-align:center; color: #333;">Категории</h2>
 			<ul class="item_list">
 				{% for cat in categories %}
-					<li class="item_list_item"><a href="http://127.0.0.1:8000/category/{{cat.slug_name}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br></a><p>{{cat.name}}</p></li>
+					<li class="item_list_item"><a href="http://127.0.0.1:8000/category/{{cat.slug_name}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
 				{% endfor %}
 			</ul>
 		</section>

@@ -27,6 +27,28 @@ body {
     overflow-x: hidden;
 }
 
+
+.top_container{
+    height: auto;
+    margin: 2%;
+}
+.logo_container {
+    display: flex;
+    justify-content: space-between;
+}
+.theme-selector{
+}
+.logo {
+    width: 50%;
+    max-width: 200px;
+    height: auto;
+}
+.logo img {
+    width: 100%;
+    height: auto;
+}
+
+
 .form-container{
     text-align: center;
 }
@@ -59,27 +81,23 @@ header {
     border-bottom-right-radius: 10px;
     margin-bottom: 3%;
 }
+/* - - - - НАВИГАЦИОННОЕ МЕНЮ - - - - - -*/
 
-.logo {
-    max-width: 10%;
-    margin-bottom: 24px;
-}
 .header_nav {
     color: #333;
     position: relative;
-    height: 150px;
+    height: auto;
     background-color: rgb(251 221 237);
     border: 1px solid #3333333d;
 }
 
 nav ul {
-    padding-top: 30px;
     display: flex;
     list-style: none;
     align-items: center;
     flex-wrap: nowrap;
     flex-direction: row;
-    justify-content: center
+    justify-content: space-between;
 }
 
 .main_nav {
@@ -89,8 +107,10 @@ nav ul {
 }
 main {
     min-height: auto;
-    max-width: 1170px;
-    margin: auto;
+    width: 90%;
+    margin: 0 auto;
+    border-left: 1px solid rgb(251 221 237);
+    border-right: 1px solid rgb(251 221 237);
 }
 
 .nav_cat {
@@ -106,14 +126,36 @@ main {
     text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
     transform: perspective(500px) scale(1.5); /* Приближение к монитору с использованием perspective */
 }
+.mobile_nav_toggle {
+    display: none;
+    cursor: pointer;
+}
 
+.mobile_nav_toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 5px 0;
+    transition: transform 0.4s ease;
+}
+
+.main_nav_list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main_nav {
+    list-style: none;
+}
 /* Стили для основного контента */
 
 h2 {
     font-size: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 1%;
 }
-section h2 {
+section h4 {
     color: #333;
 }
 
@@ -121,25 +163,23 @@ ul {
     list-style: none;
 }
 .item-section {
-    display: flex;
-    justify-content: center;
+    width: 80%;
+    margin: 5% auto;
 }
 .item_list {
     list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
 }
 
 .item_list_item {
-    text-align: center;
-    margin: 20px;
+    text-align:center;
     max-width: 250px; /* Ширина элемента, чтобы установить одинаковую ширину для всех элементов */
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: space-between;
+    margin: 2%;
 }
 .item_img {
     width: 100%; /* Ширина 100%, чтобы изображение занимало всю доступную ширину контейнера */
@@ -148,10 +188,7 @@ ul {
     transition: transform 0.5s ease;
 }
 .price_cart {
-    background-color: rgba(255, 255, 255, 0.8); /* Прозрачный фон для блока */
-    padding: 10px; /* Внутренний отступ для контента в блоке */
-    text-align: center;
-    width: 100%; /* Ширина блока равна ширине item_list_item */
+
 }
 
 .item_img:hover{
@@ -261,10 +298,9 @@ iframe{
                                            /* АВТОРИЗАЦИЯ */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .sign_in_out{
-    display: flex;
-    flex-direction: row-reverse;
     font-size: 20px;
-    height: 24px;
+    width: 25%;
+    height: auto;
 }
 
 .last {
@@ -292,7 +328,6 @@ iframe{
     /* Добавьте стили, которые хотите применить к username */
     font-weight: bold;
     color: rgb(255 137 200); /* Например, розовый цвет */
-    font-size: 40px;
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
@@ -404,9 +439,9 @@ iframe{
 
 /* КНОПКА ТЕМЫ*/
 .theme-selector {
-    display: block;
+    width: 25%;
+    height: auto;
     cursor: pointer;
-    padding: 10px;
     border: none;
     background-color: white;
     color: #333;
@@ -617,7 +652,7 @@ iframe{
 
 
 .trash img {
-    width: 40px;
+    width: auto;
     height: 40px;
     object-fit: contain;
     border-radius: 50%;
@@ -675,4 +710,115 @@ iframe{
     margin: 1%;
     width: 20px;
     border-radius: 20%;
+}
+
+/*- - - - МЕДИА - - - - -*/
+
+/* Стили для узких экранов (например, на мобильных устройствах) */
+
+@media screen and (max-width: 600px) {
+    iframe {
+        width: 100%;
+    }
+
+    .item_list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5%;
+    }
+    /* Уменьшаем отступы для основного контейнера на маленьких экранах */
+    .cart_container {
+        height: auto;
+        padding: 5px;
+        margin: 5px auto;
+        border-radius: 5px;
+    }
+
+    /* Уменьшаем размер заголовка на маленьких экранах */
+    .cart_container h1 {
+        font-size: 18px;
+    }
+
+    /* Уменьшаем размер ячеек таблицы на маленьких экранах */
+    .cart_container th, .cart_container td {
+        padding: 3px 4px;
+        font-size: 14px;
+    }
+
+    /* Уменьшаем размер шрифта для итога на маленьких экранах */
+    .cart_container .total {
+        font-size: 14px;
+    }
+
+    /* Уменьшаем отступ между элементами в корзине на маленьких экранах */
+    .cart_container .not_authorized, .cart_container .compleat {
+        margin-top: 5px;
+    }
+
+    /* Уменьшаем отступы у кнопки добавления в корзину на маленьких экранах */
+    .add_in_cart {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .trash img {
+        width: 100px; /* увеличьте или уменьшите размер по вашему усмотрению */
+        height: auto; /* чтобы сохранить пропорции изображения */
+    }
+    /* ================================================================= */
+    /* гамбургер */
+    .mobile_nav_toggle {
+        display: block;
+    }
+
+    .main_nav_list {
+        display: none; /* Initially hide the navigation list */
+        flex-direction: column;
+        position: relative;
+        top: 60px; /* Adjust as per your design */
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10%;
+    }
+
+    .main_nav {
+        margin-bottom: 10px;
+    }
+
+    .main_nav_list.active {
+        border-top: 1px solid #3333333d;
+        display: flex; /* Show when active */
+    }
+
+    .mobile_nav_toggle.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .mobile_nav_toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile_nav_toggle.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .main_nav {
+        display: block;
+        height: auto;
+        width: auto;
+        border-bottom: 1px solid #3333333d;
+        font-size: 10px;
+        margin-bottom: 10%;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    .username {
+        font-size: 15px;
+    }
+
+    iframe {
+        width: 100%;
+    }
 }

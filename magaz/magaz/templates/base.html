@@ -11,7 +11,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title></title>
 </head>
+
 <body>
+
 <script>
     const linkElement = document.querySelector('link[rel="stylesheet"]');
     const savedTheme = localStorage.getItem('selectedTheme');
@@ -24,48 +26,67 @@
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.querySelector('.mobile_nav_toggle');
+    const navList = document.querySelector('.main_nav_list');
 
+    toggleButton.addEventListener('click', function () {
+        toggleButton.classList.toggle('active');
+        navList.classList.toggle('active');
+    });
+});
 
 </script>
+
 <header class="header">
-    <div class="themes">
-        <input type="button" class="theme-selector" value="&#x1F31D;">
-    </div>
-    <h1>
+
+    <div class="top_container">
+        <div class="logo_container">
+
+            <div class="theme-selector"><input type="button" value="&#x1F31D;"></div>
+            <div class="logo">
+                <a href="http://127.0.0.1:8000">
+                    <img src="{% static 'mainApp/img/logogo.png' %}" alt="logo">
+                </a>
+            </div>
+            <div class="sign_in_out">
+                {% if user.is_authenticated %}
+                <li class="last">
+                    {% if user.username == 'admin' %}
+                    <a href="http://127.0.0.1:8000/admin/" class="user-link">
+                        <b class="username">{{user.username}}</b>
+                    </a>
+                    {% else %}
+                    <a href="http://127.0.0.1:8000/users/account/" class="user-link">
+                        <b class="username">{{user.username}}</b>
+                    </a>
+                    {% endif %}
+                    <a href="http://127.0.0.1:8000/users/logout/" class="logout-link"><p>выйти</p></a>
+                </li>
+                {% else %}
+                <li class="last">
+                    <a href="http://127.0.0.1:8000/users/login/" class="login-link"><p>Войти</p></a>
+                    <a href="http://127.0.0.1:8000/users/register/" class="register-link"><p>Регистрация</p></a>
+                </li>
+                {% endif %}
+            </div>
+
+        </div>
         <a class="buy_cart" href="{% url 'purchase:cart' %}"><img class="buy_cart_img"
                                                                   src="{% static 'mainApp/img/корзина_покупок.png' %}"
                                                                   alt="Корзина">
             <div class="item_count">{{carts.total_quantity}}</div>
         </a>
-        <span class="sign_in_out">
-        {% if user.is_authenticated %}
-            <li class="last">
-                {% if user.username == 'admin' %}
-                    <a href="http://127.0.0.1:8000/admin/" class="user-link">
-                        <b class="username">{{user.username}}</b>
-                    </a>
-                {% else %}
-                    <a href="http://127.0.0.1:8000/users/account/" class="user-link">
-                        <b class="username">{{user.username}}</b>
-                    </a>
-                {% endif %}
-                <a href="http://127.0.0.1:8000/users/logout/" class="logout-link"><p>выйти</p></a>
-            </li>
-        {% else %}
-            <li class="last">
-                <a href="http://127.0.0.1:8000/users/login/" class="login-link"><p>Войти</p></a>
-                <a href="http://127.0.0.1:8000/users/register/" class="register-link"><p>Регистрация</p></a>
-            </li>
-        {% endif %}
-    </span>
-        <span class="logo">
-            <a href="http://127.0.0.1:8000">
-                <img class="logo" src="{% static 'mainApp/img/logogo.png' %}" alt="logo">
-            </a>
-        </span>
-    </h1>
+    </div>
+
+    <!-- НАВИГАЦИОННОЕ МЕНЮ-->
     <nav class="header_nav">
-        <ul>
+        <div class="mobile_nav_toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="main_nav_list">
             <li class="main_nav">
                 <a class="nav_cat" href="http://127.0.0.1:8000/category/">Категории</a>
             </li>

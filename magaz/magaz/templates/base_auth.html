@@ -11,28 +11,40 @@
 </head>
 <body>
 <header class="header">
-    <h1>
-        <span class="sign_in_out">
+
+    <div class="top_container">
+        <div class="logo_container">
+
+            <div class="theme-selector"><input type="button" value="&#x1F31D;"></div>
+            <div class="logo">
+            <a href="http://127.0.0.1:8000">
+                <img src="{% static 'mainApp/img/logogo.png' %}" alt="logo">
+            </a>
+        </div>
+            <div class="sign_in_out">
         {% if user.is_authenticated %}
             <li class="last">
-                <a href="http://127.0.0.1:8000/users/account/" class="user-link">
-                    <b class="username">{{user.username}}</b>
-                </a>
-                <a href="http://127.0.0.1:8000/users/logout/" class="logout-link">выйти</a>
+                {% if user.username == 'admin' %}
+                    <a href="http://127.0.0.1:8000/admin/" class="user-link">
+                        <b class="username">{{user.username}}</b>
+                    </a>
+                {% else %}
+                    <a href="http://127.0.0.1:8000/users/account/" class="user-link">
+                        <b class="username">{{user.username}}</b>
+                    </a>
+                {% endif %}
+                <a href="http://127.0.0.1:8000/users/logout/" class="logout-link"><p>выйти</p></a>
             </li>
         {% else %}
             <li class="last">
-                <a href="http://127.0.0.1:8000/users/login/" class="login-link">Войти</a>
-                <a href="http://127.0.0.1:8000/users/register/" class="register-link">Регистрация</a>
+                <a href="http://127.0.0.1:8000/users/login/" class="login-link"><p>Войти</p></a>
+                <a href="http://127.0.0.1:8000/users/register/" class="register-link"><p>Регистрация</p></a>
             </li>
         {% endif %}
-    </span>
-        <span class="logo">
-            <a href="http://127.0.0.1:8000">
-                <img class="logo" src="{% static 'mainApp/img/logogo.png' %}" alt="logo">
-            </a>
-        </span>
-    </h1>
+    </div>
+
+        </div>
+    </div>
 </header>
 <main>
     {% block content %}
