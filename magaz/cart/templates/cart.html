@@ -20,27 +20,28 @@
             <td>{{cart.product.price}} р.</td>
             <td>{{cart.quantity}}</td>
             <td>{{cart.product_price}} р.</td>
-            <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img src="{% static 'mainApp/img/корзина.png' %}"></a></td>
+            <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img
+                    src="{% static 'mainApp/img/корзина.png' %}"></a></td>
         </tr>
         </tbody>
         {% endfor %}
     </table>
+    {% if user.is_authenticated%}
+    {% if not carts %}
+    <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
+    {% else %}
     <div class="total">
         Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
         Итого: <span><strong> {{carts.total_price}} руб</strong></span>
     </div>
-    {% if user.is_authenticated%}
     <div>
-        {% if carts.total_quantity > 0 %}
         <a href="#" methods="#" class="compleat">Оформить заказ</a>
-        {% else %}
-        <h4 style="text-align: center;">Вы не добавили ни одного товара</h4>
-        {% endif %}
     </div>
+    {% endif %}
     {% else %}
     <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
-    <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
-</div>
+        <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
