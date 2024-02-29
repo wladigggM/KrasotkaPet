@@ -30,13 +30,26 @@ class About(TemplateView):
 
 
 class Categorys(ListView):
-    model = Category
-    template_name = 'category.html'
-    context_object_name = 'categories'
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        carts = Cart.objects.filter(user=request.user)
+        data = {
+            'categories': categories,
+            'carts': carts
+        }
+        return render(request, 'category.html', data)
 
 
-class Sales(TemplateView):
+class Sales(ListView):
     template_name = 'sale.html'
+
+    def get(self, request, *args, **kwargs):
+        carts = Cart.objects.filter(user=request.user)
+        data = {
+            'carts': carts
+        }
+        return render(request, 'sale.html', data)
 
 
 class ItemsView(ListView):
@@ -45,9 +58,12 @@ class ItemsView(ListView):
     def get(self, request, *args, **kwargs):
         cat_items = Item.objects.filter(slug_name=self.kwargs['cat_slug'])
         cat_name = Category.objects.filter(slug_name=self.kwargs['cat_slug'])
+        carts = Cart.objects.filter(user=request.user)
+
         data = {
             'items': cat_items,
             'cat_name': cat_name[0],
+            'carts': carts,
         }
 
         return render(request, 'home_linen.html', data)
@@ -60,10 +76,12 @@ class AboutItemView(ListView):
     def get(self, request, *args, **kwargs):
         queryset = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
         item = Item.objects.filter(item_slug=self.kwargs['item_slug'], slug_name=self.kwargs['cat_slug'])
+        carts = Cart.objects.filter(user=request.user)
 
         data = {
             'queryset': queryset,
-            'item': item[0]
+            'item': item[0],
+            'carts': carts
 
         }
 
@@ -79,18 +97,21 @@ class ReviewsListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AddReview()
+        carts = Cart.objects.filter(user=self.request.user)
+        context['carts'] = carts
         return context
 
     def post(self, request, *args, **kwargs):
         form = AddReview(request.POST)
         if form.is_valid():
             try:
+                form.instance.user = request.user
                 form.save()
                 return redirect('reviews-list')
-            except:
-                pass
+            except Exception as e:
+                # Handle the exception properly, e.g., log it or show an error message
+                print(e)  # Printing the exception for debugging purposes
         return self.get(request, *args, **kwargs)
-
     def get_queryset(self):
         return Reviews.objects.order_by('?')[:6]  # ДОБАВИТЬ В БД ID_USER
 
