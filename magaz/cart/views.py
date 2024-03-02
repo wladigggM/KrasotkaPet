@@ -19,21 +19,6 @@ class CartView(View):
         return render(request, 'cart.html')
 
 
-def cart_add(request, item_slug):
-    product = Item.objects.get(item_slug=item_slug)
-
-    if request.user.is_authenticated:
-        carts = Cart.objects.filter(user=request.user, product=product)
-
-        if carts.exists():
-            cart = carts.first()
-            if cart:
-                cart.quantity += 1
-                cart.save()
-        else:
-            Cart.objects.create(user=request.user, product=product, quantity=1)
-    return redirect(request.META['HTTP_REFERER'])
-
 
 def cart_change(request, product_slug):
     ...

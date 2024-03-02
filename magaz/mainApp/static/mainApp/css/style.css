@@ -555,7 +555,7 @@ iframe{
     text-decoration: underline;
 }
 
-.add_in_cart {
+.add-to-cart {
     display: inline-block;
     padding: 3px;
     background-color: rgb(251, 221, 237);
@@ -566,7 +566,7 @@ iframe{
     font-family: Arial, sans-serif;
 }
 
-.add_in_cart:hover {
+.add-to-cart:hover {
     background-color: #f9c6d3; /* Цвет фона при наведении */
 }
 
@@ -691,7 +691,7 @@ iframe{
     object-fit: contain;
 }
 
-.item_count {
+#cart-count {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -757,7 +757,7 @@ iframe{
     }
 
     /* Уменьшаем отступы у кнопки добавления в корзину на маленьких экранах */
-    .add_in_cart {
+    .add-to-cart {
         padding: 2px;
         font-size: 12px;
     }

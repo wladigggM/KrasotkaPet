@@ -1,21 +1,14 @@
 from django.core.paginator import Paginator
 from django.db.models import Max
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView
 
 from cart.models import Cart
+from cart.utils import get_cart_user, add_to_cart
 from .forms import *
 from .models import *
-
-
-def get_cart_user(request):
-    carts = Cart.objects.none()
-
-    if request.user.is_authenticated:
-        carts = Cart.objects.filter(user=request.user)
-        print(carts)
-    return carts
 
 
 # Create your views here.
@@ -31,6 +24,9 @@ class Index(ListView):
         }
 
         return render(request, 'index.html', data)
+
+    def post(self, request, *args, **kwargs):
+        return add_to_cart(request)
 
 
 class About(TemplateView):

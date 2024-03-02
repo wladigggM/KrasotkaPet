@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
         navList.classList.toggle('active');
     });
 });
-
 </script>
 
 <header class="header">
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <a class="buy_cart" href="{% url 'purchase:cart' %}"><img class="buy_cart_img"
                                                                   src="{% static 'mainApp/img/корзина_покупок.png' %}"
                                                                   alt="Корзина">
-            <div class="item_count">{{carts.total_quantity}}</div>
+            <div id="cart-count">{{carts.total_quantity}}</div>
         </a>
     </div>
 
@@ -119,6 +118,50 @@ document.addEventListener('DOMContentLoaded', function () {
     <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Acabe00bc532732b9281b46adffe3f626dcdd78c9b9a39b3fe4279d03a0b87442&amp;source=constructor"
             width="500" height="400" frameborder="0"></iframe>
 </div>
+<script>
+    $('.add-to-cart').on('click', function() {
+    const productId = $(this).data('product');
+    const quantity = $(this).data('quantity');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity);
+    addToCartWithJQuery(productId, quantity);
+});
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+function addToCartWithJQuery(productId, quantity) {
+    $.ajax({
+        url: 'http://127.0.0.1:8000/',
+        type: 'POST',
+        data: {
+            'product_id': productId,
+            'quantity': quantity
+        },
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        },
+        success: function(data) {
+            if (data.cartCount) {
+                $('#cart-count').text(`${data.cartCount}`);
+            }
+            console.log('Данные успешно отправлены на сервер:', data);
+        },
+        error: function(error) {
+            console.error('Ошибка при добавлении в корзину:', error);
+        }
+    });
+}
+</script>
 <script src="{% static 'mainApp/js/dark_mode1.js' %}" defer></script>
 </body>
 </html>
