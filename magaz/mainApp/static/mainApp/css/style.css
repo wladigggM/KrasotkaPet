@@ -651,7 +651,7 @@ iframe{
 }
 
 
-.trash img {
+.trash_button img {
     width: auto;
     height: 40px;
     object-fit: contain;
@@ -659,7 +659,7 @@ iframe{
     transition: box-shadow 1s ease, background-color 1s ease;
 }
 
-.trash img:hover {
+.trash_button img:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: rgb(251, 221, 237);
 }
@@ -706,7 +706,7 @@ iframe{
     font-size: 12px;
 }
 /* - - - кнопки увеличения/уменьшения кол-ва предметов в корзине - - - -*/
-.quantity_item_btn {
+.increment, decrement {
     margin: 1%;
     width: 20px;
     border-radius: 20%;
@@ -762,7 +762,7 @@ iframe{
         font-size: 12px;
     }
 
-    .trash img {
+    .trash_button img {
         width: 100px; /* увеличьте или уменьшите размер по вашему усмотрению */
         height: auto; /* чтобы сохранить пропорции изображения */
     }

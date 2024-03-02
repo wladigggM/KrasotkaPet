@@ -17,45 +17,71 @@
             <input type="submit" value="Сохранить">
         </form>
     </div>
-    <div class="cart_container" style="margin:0;">
-        <h2>Корзина:</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Название товара</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-                <th></th>
-            </tr>
-            </thead>
-            {% for cart in carts %}
-            <tbody>
-            <tr>
-                <td>{{cart.product.name}}</td>
-                <td>{{cart.product.price}} р.</td>
-                <td>{{cart.quantity}}</td>
-                <td>{{cart.product_price}} р.</td>
-                <td><a href="{% url 'purchase:cart_remove' cart.id %}" class="trash"><img
-                        src="{% static 'mainApp/img/корзина.png' %}"></a></td>
-            </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        {% if not carts %}
-        <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
-        {% else %}
-        <div class="total">
-            Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
-            Итого: <span><strong> {{carts.total_price}} руб</strong></span>
-        </div>
-        <div>
-            <a href="#" methods="#" class="compleat">Оформить заказ</a>
-        </div>
-        {% endif %}
-
+    <div class="cart_container">
+    <h1>Корзина товаров</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Название товара</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Скидка</th>
+            <th></th>
+        </tr>
+        </thead>
+        {% for cart in carts %}
+        <tbody>
+        <tr class="{{cart.id}}">
+            <td>{{cart.product.name}}</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.sell_price}} руб</td>
+            {% else %}
+            <td>{{cart.product.price}} руб</td>
+            {% endif %}
+            <td>
+                <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="-1"
+                        data-cartid="{{cart.id}}" data-action="decrement" data-path="{{ request.build_absolute_uri }}">-
+                </button>
+                <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
+                <button class="increment" data-product="{{ cart.product.id }}" data-path="{{ request.build_absolute_uri }}" data-quantity="1"
+                        data-action="increment">+
+                </button>
+            </td>
+            <td id="total_price_item">{{cart.product_price}} руб</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.discount}}%</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            <td>
+                <button style="background-color: transparent;" class="trash_button" data-path="{{ request.build_absolute_uri }}" data-cartid="{{ cart.id }}"
+                        data-action="delete"><img
+                        src="{% static 'mainApp/img/корзина.png' %}"></button>
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% if user.is_authenticated%}
+    {% if not carts %}
+    <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
+    {% else %}
+    <div class="total">
+        Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
+        Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
     </div>
+    <div>
+        <a href="#" methods="#" class="compleat">Оформить заказ</a>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
+        <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
+    </div>
+    {% endif %}
 </div>
+<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
 {% endblock %}
 
 <!-- ИСТОРИЯ ЗАКАЗОВ -->
