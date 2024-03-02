@@ -10,6 +10,7 @@
                 <th>Цена</th>
                 <th>Количество</th>
                 <th>Сумма</th>
+                <th>Скидка</th>
                 <th></th>
             </tr>
         </thead>
@@ -17,13 +18,22 @@
         <tbody>
         <tr>
             <td>{{cart.product.name}}</td>
-            <td>{{cart.product.price}} р.</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.sell_price}} руб</td>
+            {% else %}
+            <td>{{cart.product.price}} руб</td>
+            {% endif %}
             <td>
-                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="decrease">-</button>
-                {{ cart.quantity }}
-                <button class="quantity_item_btn" data-cart-id="{{ cart.id }}" data-action="increase">+</button>
+                <button class="quantity_item_btn" data-product="{{ cart.product.item.id }}" data-quantity="1">-</button>
+                <p class="cart-quantity-item">{{ cart.quantity }}</p>
+                <button class="quantity_item_btn" data-product="{{ cart.product.id }}" data-quantity="1">+</button>
             </td>
-            <td>{{cart.product_price}} р.</td>
+            <td id="total_price_item">{{cart.product_price}} руб</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.discount}}%</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
             <td><a href="{% url 'purchase:cart_remove' cart.id%}" class="trash"><img
                     src="{% static 'mainApp/img/корзина.png' %}"></a></td>
         </tr>
@@ -36,7 +46,7 @@
     {% else %}
     <div class="total">
         Кол-во: <span><strong>{{carts.total_quantity}} шт</strong></span><br>
-        Итого: <span><strong> {{carts.total_price}} руб</strong></span>
+        Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
     </div>
     <div>
         <a href="#" methods="#" class="compleat">Оформить заказ</a>
@@ -48,4 +58,55 @@
     </div>
     {% endif %}
 </div>
+<script>
+$('.quantity_item_btn').on('click', function() {
+    const button = $(this);
+    const productId = button.data('product');
+    const quantity = button.data('quantity');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity);
+    addToCartWithJQuery(productId, quantity, button);
+});
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+function addToCartWithJQuery(productId, quantity, button) {
+    $.ajax({
+        url: 'http://127.0.0.1:8000/purchase/cart/',
+        type: 'POST',
+        data: {
+            'product_id': productId,
+            'quantity': quantity
+        },
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        },
+        success: function(data) {
+            if (data) {
+                // Находим элемент количества товара внутри строки, содержащей кнопку
+                const quantityElement = button.siblings('.cart-quantity-item');
+                quantityElement.text(`${data.cartCount} шт`);
+                // Находим элемент суммы товара внутри строки, содержащей кнопку
+                const priceElement = button.closest('tr').find('#total_price_item');
+                priceElement.text(`${data.priceItem} руб`);
+                $('#total_price').text(`${data.totalPrice} руб`);
+            }
+            console.log('Данные успешно отправлены на сервер:', data);
+        },
+        error: function(error) {
+            console.error('Ошибка при добавлении в корзину:', error);
+        }
+    });
+}
+</script>
 {% endblock %}

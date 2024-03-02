@@ -6,10 +6,8 @@ from mainApp.models import Item
 
 def get_cart_user(request):
     carts = Cart.objects.none()
-
     if request.user.is_authenticated:
         carts = Cart.objects.filter(user=request.user)
-        print(carts)
     return carts
 
 
@@ -34,7 +32,6 @@ def add_to_cart(request):
         # Возвращаем JSON-ответ с обновленным количеством товаров в корзине
         user_cart = Cart.objects.filter(user=user)
         cart_count = user_cart.total_quantity()
-        print(cart_count)
         return JsonResponse({'cartCount': cart_count})
     else:
         return JsonResponse({'error': 'Invalid request'}, status=400)
