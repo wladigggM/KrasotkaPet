@@ -1,6 +1,7 @@
 $(document).ready(function() {
+    url = window.location.href;
     // Проверяем текущий URL страницы
-    if (window.location.href === 'http://127.0.0.1:8000/') {
+    if (url !== 'http://127.0.0.1:8000/purchase/cart/' && url !== 'http://127.0.0.1:8000/users/account/') {
     $('.add-to-cart').on('click', function() {
     const productId = $(this).data('product');
     const quantity = $(this).data('quantity');
@@ -47,8 +48,8 @@ function addToCartWithJQuery(productId, quantity, path) {
 }
 
     } else if (
-    window.location.href === 'http://127.0.0.1:8000/purchase/cart/' ||
-    window.location.href === 'http://127.0.0.1:8000/users/account/'
+    url === 'http://127.0.0.1:8000/purchase/cart/' ||
+    url === 'http://127.0.0.1:8000/users/account/'
     ) {
     // СОЗДАЕМ ПУСТОЙ БЛОК
 var emptyBlock = $('<h4>', {

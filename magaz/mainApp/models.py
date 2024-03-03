@@ -1,9 +1,19 @@
 from django.db import models
+from django.template.defaultfilters import slugify
+
+from transliterate import translit
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название категории')
-    slug_name = models.CharField(max_length=100, default='slug_name', verbose_name='Слаг')
+    slug_name = models.SlugField(max_length=100, unique=True, verbose_name='Слаг', blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug_name or translit(str(self.name), 'ru', reversed=True) != self.slug_name:
+            slug_name = translit(str(self.name), 'ru', reversed=True)
+            self.slug_name = slugify(slug_name)
+
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -21,8 +31,8 @@ class Item(models.Model):
     image = models.ImageField(upload_to='items/%Y/%m/%d/', blank=True, verbose_name='Фото')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
-    slug_name = models.CharField(max_length=100, default='slug_name', verbose_name='Слаг (форен кей)')
-    item_slug = models.CharField(max_length=100, default='item_slug', verbose_name='Слаг (предмета)')
+    slug_name = models.SlugField(max_length=100, verbose_name='Слаг (форен кей)', blank=True)
+    item_slug = models.SlugField(max_length=100, unique=True, verbose_name='Слаг (предмета))', blank=True)
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка')
 
     def __str__(self):
@@ -31,6 +41,15 @@ class Item(models.Model):
     def save(self, *args, **kwargs):
         if not self.category:
             self.category = Category.objects.get(name='Домашняя одежда')
+
+        if not self.item_slug or translit(str(self.name), 'ru', reversed=True) != self.item_slug:
+            item_slug_name = translit(str(self.name), 'ru', reversed=True)
+            self.item_slug = slugify(item_slug_name)
+            print(f'name = {self.name} item_slug= {self.item_slug}')
+
+        if self.category and not self.slug_name or self.slug_name != self.category.name:
+            self.slug_name = slugify(self.category.slug_name)
+
         super().save(*args, **kwargs)
 
     def sell_price(self):

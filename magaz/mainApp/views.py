@@ -10,14 +10,15 @@ from cart.utils import get_cart_user, add_to_cart
 from .forms import *
 from .models import *
 
-
 # Create your views here.
-class Index(ListView):
 
+
+class Index(ListView):
     def get(self, request, *args, **kwargs):
         thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
         new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
         carts = get_cart_user(request)
+
         data = {
             'items': new_items,
             'carts': carts,
@@ -71,6 +72,9 @@ class ItemsView(ListView):
         }
 
         return render(request, 'home_linen.html', data)
+
+    def post(self, request, *args, **kwargs):
+        return add_to_cart(request)
 
 
 class AboutItemView(ListView):
