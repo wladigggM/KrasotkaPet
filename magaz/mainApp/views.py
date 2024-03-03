@@ -96,7 +96,7 @@ class ReviewsListView(ListView):
     model = Reviews
     template_name = 'reviews.html'
     context_object_name = 'reviews'
-    paginate_by = 5
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -113,7 +113,6 @@ class ReviewsListView(ListView):
                 form.save()
                 return redirect('reviews-list')
             except Exception as e:
-                # Handle the exception properly, e.g., log it or show an error message
                 print(e)  # Printing the exception for debugging purposes
         return self.get(request, *args, **kwargs)
 

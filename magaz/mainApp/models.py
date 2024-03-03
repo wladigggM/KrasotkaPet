@@ -23,7 +23,7 @@ class Item(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     slug_name = models.CharField(max_length=100, default='slug_name', verbose_name='Слаг (форен кей)')
     item_slug = models.CharField(max_length=100, default='item_slug', verbose_name='Слаг (предмета)')
-    discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2,verbose_name='Скидка')
+    discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка')
 
     def __str__(self):
         return self.name
@@ -35,8 +35,9 @@ class Item(models.Model):
 
     def sell_price(self):
         if self.discount:
-            return round(self.price - self.price * self.discount/100, 2)
+            return round(self.price - self.price * self.discount / 100, 2)
         return self.price
+
     class Meta:
         verbose_name = 'Вещи'
         verbose_name_plural = 'Вещи'
@@ -48,6 +49,7 @@ class Reviews(models.Model):
     email = models.CharField(max_length=255, verbose_name='Email')
     rating = models.CharField(max_length=255, verbose_name='Рейтинг')
     comment = models.TextField(max_length=255, verbose_name='Комментарий')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Отзыв'

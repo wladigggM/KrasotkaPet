@@ -1,8 +1,61 @@
-// СОЗДАЕМ ПУСТОЙ БЛОК
+$(document).ready(function() {
+    // Проверяем текущий URL страницы
+    if (window.location.href === 'http://127.0.0.1:8000/') {
+    $('.add-to-cart').on('click', function() {
+    const productId = $(this).data('product');
+    const quantity = $(this).data('quantity');
+    const path = $(this).data('path');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'path=', path);
+    addToCartWithJQuery(productId, quantity, path);
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+function addToCartWithJQuery(productId, quantity, path) {
+    $.ajax({
+        url: path,
+        type: 'POST',
+        data: {
+            'product_id': productId,
+            'quantity': quantity
+        },
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        },
+        success: function(data) {
+            if (data.cartCount) {
+                $('#cart-count').text(`${data.cartCount}`);
+            }
+            console.log('Данные успешно отправлены на сервер:', data);
+        },
+        error: function(error) {
+            console.error('Ошибка при добавлении в корзину:', error);
+        }
+    });
+}
+
+    } else if (
+    window.location.href === 'http://127.0.0.1:8000/purchase/cart/' ||
+    window.location.href === 'http://127.0.0.1:8000/users/account/'
+    ) {
+    // СОЗДАЕМ ПУСТОЙ БЛОК
 var emptyBlock = $('<h4>', {
     text: 'Пусто',
     style: 'text-align: center; margin-top: 2%;'
 });
+
 // ПОЛУЧАЕМ КУКИ (csrf)
 function getCookie(name) {
     let cookieValue = null;
@@ -26,18 +79,19 @@ $('.increment').on('click', function() {
     const productId = button.data('product');
     const quantity = button.data('quantity');
     const action = $(this).data('action');
-    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'action', action);
-    addToCartWithJQuery(productId, quantity, button, action);
+    const path = $(this).data('path');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'action', action, 'path=', path);
+    addToCartWithJQuery(productId, quantity, button, action, path);
 });
 // AJAX
-function addToCartWithJQuery(productId, quantity, button, action) {
+function addToCartWithJQuery(productId, quantity, button, action, path) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/purchase/cart/',
+        url: path,
         type: 'POST',
         data: {
             'product_id': productId,
             'quantity': quantity,
-            'action': action
+            'action': action,
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
@@ -65,13 +119,15 @@ function addToCartWithJQuery(productId, quantity, button, action) {
 
 $('.trash_button').on('click', function() {
     const cartId = $(this).data('cartid');
+    const productId = $(this).data('product');
     const action = $(this).data('action');
-    console.log('Отправка данных на сервер: cartId =', cartId),'action', action;
-    removeCart(cartId, action);
+    const path = $(this).data('path');
+    console.log('Отправка данных на сервер: cartId =', cartId,'action=', action, 'path', path, 'productId', productId);
+    removeCart(cartId, action, path, productId);
 });
-function removeCart(cartId, action) {
+function removeCart(cartId, action, path, productId) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/purchase/cart/',
+        url: path,
         type: 'POST',
         data: {
             'cartId': cartId,
@@ -107,13 +163,14 @@ $('.decrement').on('click', function() {
     const quantity = button.data('quantity');
     const cartId = button.data('cartid');
     const action = button.data('action');
-    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity , 'cartId=',cartId, 'action',action);
-    removeToCartWithJQuery(productId, quantity,cartId, button, action);
+    const path = button.data('path');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity , 'cartId=',cartId, 'action',action, 'path=', path);
+    removeToCartWithJQuery(productId, quantity,cartId, button, action, path);
 });
 // AJAX
-function removeToCartWithJQuery(productId, quantity, cartId, button, action) {
+function removeToCartWithJQuery(productId, quantity, cartId, button, action, path) {
     $.ajax({
-        url: 'http://127.0.0.1:8000/purchase/cart/',
+        url: path,
         type: 'POST',
         data: {
             'product_id': productId,
@@ -143,7 +200,7 @@ function removeToCartWithJQuery(productId, quantity, cartId, button, action) {
                     $('.cart_container').append(emptyBlock);
                     }
                 }
-                
+
             }
             console.log('Данные успешно отправлены на сервер:', data);
         },
@@ -152,3 +209,6 @@ function removeToCartWithJQuery(productId, quantity, cartId, button, action) {
         }
     });
 }
+
+    }
+});

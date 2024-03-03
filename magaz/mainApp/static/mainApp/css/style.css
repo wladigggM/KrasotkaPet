@@ -653,6 +653,7 @@ iframe{
 
 .trash_button img {
     width: auto;
+    min-width: 40px;
     height: 40px;
     object-fit: contain;
     border-radius: 50%;

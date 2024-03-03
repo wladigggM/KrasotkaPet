@@ -21,7 +21,7 @@
                 <p class="original-price">{{ item.price }} руб</p>
                 <p>{{ item.sell_price }} руб</p>
                 {% endif %}
-                <button class="add-to-cart" data-product="{{ item.id }}" data-quantity="1">Добавить в корзину</button>
+                <button class="add-to-cart" data-product="{{ item.id }}" data-quantity="1" data-path="{{ request.build_absolute_uri }}">Добавить в корзину</button>
             </div>
         </li>
         {% endfor %}

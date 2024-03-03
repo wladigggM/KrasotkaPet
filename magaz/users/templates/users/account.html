@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
 <div class="acc_container">
     <div class="user-details">
         <h2>Здравствуйте, {{user.username}} !</h2>
@@ -17,7 +18,7 @@
             <input type="submit" value="Сохранить">
         </form>
     </div>
-    <div class="cart_container">
+<div class="cart_container">
     <h1>Корзина товаров</h1>
     <table>
         <thead>
@@ -40,7 +41,7 @@
             <td>{{cart.product.price}} руб</td>
             {% endif %}
             <td>
-                <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="-1"
+                <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="1"
                         data-cartid="{{cart.id}}" data-action="decrement" data-path="{{ request.build_absolute_uri }}">-
                 </button>
                 <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
@@ -81,7 +82,6 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
 {% endblock %}
 
 <!-- ИСТОРИЯ ЗАКАЗОВ -->

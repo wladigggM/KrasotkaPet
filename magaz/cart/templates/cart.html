@@ -24,12 +24,12 @@
             <td>{{cart.product.price}} руб</td>
             {% endif %}
             <td>
-                <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="-1"
-                        data-cartid="{{cart.id}}" data-action="decrement" data-path="{{ request.build_absolute_uri }}">-
+                <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="1"
+                        data-cartid="{{cart.id}}" data-action="decrement" data-path="{{ request.build_absolute_uri }}">{%csrf_token%}-
                 </button>
                 <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
                 <button class="increment" data-product="{{ cart.product.id }}" data-path="{{ request.build_absolute_uri }}" data-quantity="1"
-                        data-action="increment">+
+                        data-action="increment">{%csrf_token%}+
                 </button>
             </td>
             <td id="total_price_item">{{cart.product_price}} руб</td>
@@ -40,7 +40,7 @@
             {% endif %}
             <td>
                 <button style="background-color: transparent;" class="trash_button" data-path="{{ request.build_absolute_uri }}" data-cartid="{{ cart.id }}"
-                        data-action="delete"><img
+                        data-action="delete" data-product="{{ cart.product.id }}">{%csrf_token%}<img
                         src="{% static 'mainApp/img/корзина.png' %}"></button>
             </td>
         </tr>
