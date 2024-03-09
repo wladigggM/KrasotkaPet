@@ -20,12 +20,17 @@ class LoginUser(LoginView):
     extra_context = {'title': 'Авторизация'}
 
     def form_valid(self, form):
-        r = super().form_valid(form)
+        # Check if session_key exists
+        session_key = self.request.session.session_key
+
+        # Call the parent class method to complete the login process
+        response = super().form_valid(form)
+        # Set cookie with username
         username = self.request.user.username
-        r.set_cookie('username', username, max_age=3600)
-
-        return r
-
+        if session_key:
+            Cart.objects.filter(session_key=session_key).update(user=self.request.user)
+        response.set_cookie('username', username, max_age=3600)
+        return response
 
 @login_required(login_url='/users/login')
 def account(request):
@@ -50,3 +55,14 @@ class AccountView(View):
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'users/register.html'
+
+    def form_valid(self, form):
+        session_key = self.request.session.session_key
+
+        response = super().form_valid(form)
+
+        if self.request.user.is_authenticated:
+            if session_key:
+                Cart.objects.filter(session_key=session_key).update(user=self.request.user)
+
+        return response

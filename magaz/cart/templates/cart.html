@@ -47,7 +47,6 @@
         </tbody>
         {% endfor %}
     </table>
-    {% if user.is_authenticated%}
     {% if not carts %}
     <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
     {% else %}
@@ -55,11 +54,13 @@
         Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
         Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
     </div>
+    {% if user.is_authenticated%}
     <div>
         <a href="#" methods="#" class="compleat">Оформить заказ</a>
     </div>
     {% endif %}
-    {% else %}
+    {% endif %}
+    {% if not user.is_authenticated%}
     <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
         <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
     </div>

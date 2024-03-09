@@ -18,7 +18,6 @@ class Index(ListView):
         thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
         new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
         carts = get_cart_user(request)
-
         data = {
             'items': new_items,
             'carts': carts,

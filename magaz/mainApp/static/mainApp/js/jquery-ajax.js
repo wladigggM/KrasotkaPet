@@ -145,7 +145,7 @@ function removeCart(cartId, action, path, productId) {
                 if (data.totalUserCart == 0) {
                 $('.compleat').remove();
                 $('.total').remove();
-                $('.cart_container').append(emptyBlock);
+                $('.cart_container table').after(emptyBlock);
                 }
             }
             console.log('Данные успешно отправлены на сервер:', data);
