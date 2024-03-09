@@ -12,10 +12,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'category', 'created_at', 'updated_at', 'slug_name', 'item_slug')
-    list_display_list = ('category', 'name', 'price', 'created_at', 'updated_at', 'slug_name', 'item_slug')
-    readonly_fields = ('created_at', 'updated_at', 'slug_name', 'item_slug')
+    list_display = ('name', 'price', 'category', 'created_at', 'updated_at',)
+    list_display_links = ('name',)
+    readonly_fields = ('created_at', 'updated_at', 'slug_name', 'item_slug',)
     search_fields = ('name', 'id')
+    fields = ('name', ('price', 'discount'), 'category', ('created_at', 'updated_at'), ('slug_name', 'item_slug'))
 
 
 class ReviewsAdmin(admin.ModelAdmin):
