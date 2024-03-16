@@ -6,8 +6,9 @@ $(document).ready(function() {
     const productId = $(this).data('product');
     const quantity = $(this).data('quantity');
     const path = $(this).data('path');
-    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'path=', path);
-    addToCartWithJQuery(productId, quantity, path);
+    const size = $('#size').val();
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'path=', path , 'size = ', size);
+    addToCartWithJQuery(productId, quantity, path, size);
 });
 
 function getCookie(name) {
@@ -24,13 +25,14 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-function addToCartWithJQuery(productId, quantity, path) {
+function addToCartWithJQuery(productId, quantity, path, size) {
     $.ajax({
         url: path,
         type: 'POST',
         data: {
             'product_id': productId,
-            'quantity': quantity
+            'quantity': quantity,
+            'size': size,
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));

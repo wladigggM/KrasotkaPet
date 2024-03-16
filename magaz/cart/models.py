@@ -27,6 +27,7 @@ class Cart(models.Model):
     session_key = models.CharField(max_length=32, null=True, blank=True)
     created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='дата добавления')
     new_params = models.CharField(max_length=32, null=True, blank=True)
+    size = models.CharField(max_length=5, null=True, blank=True)
 
     class Meta:
         db_table = 'cart'

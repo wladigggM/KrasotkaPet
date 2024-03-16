@@ -23,6 +23,17 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
+class Size(models.Model):
+    size_name = models.IntegerField(verbose_name='Размер')
+
+    def __str__(self):
+        return str(self.size_name)
+
+    class Meta:
+        verbose_name = 'Размер'
+        verbose_name_plural = 'Размеры'
+
+
 class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, verbose_name='Категория')
     name = models.CharField(max_length=100, verbose_name='Название')
@@ -34,6 +45,7 @@ class Item(models.Model):
     slug_name = models.SlugField(max_length=100, verbose_name='Слаг (форен кей)', blank=True)
     item_slug = models.SlugField(max_length=100, unique=True, verbose_name='Слаг (предмета))', blank=True)
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка')
+    size = models.ManyToManyField(Size, verbose_name='Размеры')
 
     def __str__(self):
         return self.name

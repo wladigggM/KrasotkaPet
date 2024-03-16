@@ -18,6 +18,7 @@ def add_to_cart(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         quantity = int(request.POST.get('quantity', 1))
+        size = request.POST.get('size')
         product = Item.objects.get(id=product_id)
         user = request.user
         if request.user.is_authenticated:

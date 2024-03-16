@@ -10,6 +10,7 @@ from cart.utils import get_cart_user, add_to_cart
 from .forms import *
 from .models import *
 
+
 # Create your views here.
 
 
@@ -93,6 +94,9 @@ class AboutItemView(ListView):
         }
 
         return render(request, 'about_item.html', data)
+
+    def post(self, request, *args, **kwargs):
+        return add_to_cart(request)
 
 
 class ReviewsListView(ListView):
