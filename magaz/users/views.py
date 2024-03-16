@@ -11,8 +11,10 @@ from cart.utils import ajax_request
 from mainApp.models import Item
 from users.forms import RegisterUserForm
 
-
 # Create your views here.
+
+from django.db.models import F
+
 
 class LoginUser(LoginView):
     form_class = AuthenticationForm
@@ -20,17 +22,37 @@ class LoginUser(LoginView):
     extra_context = {'title': 'Авторизация'}
 
     def form_valid(self, form):
-        # Check if session_key exists
         session_key = self.request.session.session_key
 
-        # Call the parent class method to complete the login process
         response = super().form_valid(form)
-        # Set cookie with username
-        username = self.request.user.username
-        if session_key:
-            Cart.objects.filter(session_key=session_key).update(user=self.request.user)
-        response.set_cookie('username', username, max_age=3600)
+
+        current_user = self.request.user
+
+        # Получить корзину текущего пользователя и предыдущую корзину с тем же session_key, если она есть
+        current_cart = Cart.objects.filter(user=current_user)
+        previous_cart = Cart.objects.filter(session_key=session_key)
+        print(f'current_cart= {current_cart}'
+              f'previous_cart = {previous_cart}')
+
+        # Обновить количество товаров в текущей корзине, если они присутствуют в предыдущей корзине
+        for item in previous_cart:
+            matching_items = current_cart.filter(product=item.product, size=item.size)
+            if matching_items.exists():
+                matching_item = matching_items.first()
+                matching_item.quantity = F('quantity') + item.quantity
+                matching_item.save()
+            else:
+                item.user = current_user
+                item.session_key = None
+                item.save()
+
+        previous_cart.delete()
+
+        # Установить cookie с именем пользователя
+        response.set_cookie('username', current_user.username, max_age=3600)
+
         return response
+
 
 @login_required(login_url='/users/login')
 def account(request):

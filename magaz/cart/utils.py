@@ -21,46 +21,44 @@ def add_to_cart(request):
         size = request.POST.get('size')
         product = Item.objects.get(id=product_id)
         user = request.user
+
         if request.user.is_authenticated:
             # Получите корзину текущего пользователя
-            cart, created = Cart.objects.get_or_create(user=user, product=product)
-
-            # Обновите количество товара в корзине
-            if not created:
+            cart = Cart.objects.filter(user=user, product=product, size=size).first()
+            if cart:
+                # Если товар с таким размером уже есть в корзине, просто обновляем количество
                 cart.quantity += quantity
                 cart.save()
             else:
-                cart.quantity = quantity
-                cart.save()
+                # Если товара с таким размером в корзине еще нет, создаем новую запись
+                Cart.objects.create(user=user, product=product, size=size, quantity=quantity)
 
-            # Возвращаем JSON-ответ с обновленным количеством товаров в корзине
             user_cart = Cart.objects.filter(user=user)
             cart_count = user_cart.total_quantity()
             return JsonResponse({'cartCount': cart_count})
 
         else:
-            print('else')
-            # Получите корзину текущего пользователя
-            cart, created = Cart.objects.get_or_create(session_key=request.session.session_key, product=product)
+            # Получаем корзину текущего пользователя
+            cart = Cart.objects.filter(session_key=request.session.session_key, product=product, size=size).first()
 
-            # Обновите количество товара в корзине
-            if not created:
+            if cart:
+                # Если товар с таким размером уже есть в корзине, просто обновляем количество
                 cart.quantity += quantity
                 cart.save()
             else:
-                cart.quantity = quantity
-                cart.save()
+                # Если товара с таким размером в корзине еще нет, создаем новую запись
+                Cart.objects.create(session_key=request.session.session_key, product=product, size=size,
+                                    quantity=quantity)
 
             # Возвращаем JSON-ответ с обновленным количеством товаров в корзине
             user_cart = Cart.objects.filter(session_key=request.session.session_key)
             cart_count = user_cart.total_quantity()
-            print(cart_count)
             return JsonResponse({'cartCount': cart_count})
     else:
         return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
-def update_cart_and_response(user_or_session_key, product, quantity, action, cart_id=None):
+def update_cart_and_response(user_or_session_key, product, quantity, action, size, cart_id=None):
     data = {}
     success = False
 
@@ -73,33 +71,36 @@ def update_cart_and_response(user_or_session_key, product, quantity, action, car
 
     if action == 'delete':
         try:
-            remove_cart = Cart.objects.get(id=cart_id, **filter_params)
+            print(size)
+            remove_cart = Cart.objects.get(id=cart_id, **filter_params, size=size)
             remove_cart.delete()
             success = True
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+            print(e)
+            return {'error': str(e)}
 
     elif action == 'increment':
         try:
-            cart, created = Cart.objects.get_or_create(**filter_params, product=product)
+            cart, created = Cart.objects.get_or_create(**filter_params, product=product, size=size)
             cart.quantity += quantity if not created else quantity - cart.quantity
             cart.save()
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+            print(e)
+            return {'error': str(e)}
 
     elif action == 'decrement':
         try:
-            cart = Cart.objects.get(**filter_params, product=product)
+            cart = Cart.objects.get(**filter_params, product=product, size=size)
             cart.quantity -= 1
             cart.save()
             if cart.quantity <= 0:
                 cart.delete()
                 success = True
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+            return {'error': str(e)}
 
     user_cart = Cart.objects.filter(**filter_params)
-    user_cart_prod = user_cart.filter(product=product)
+    user_cart_prod = user_cart.filter(product=product, size=size)
 
     cart_count = user_cart_prod.total_quantity() if user_cart_prod.exists() else 0
 
@@ -133,23 +134,23 @@ def ajax_request(request):
             quantity = int(request.POST.get('quantity', 1))
             cart_id = request.POST.get('cartId')
             action = request.POST.get('action')
+            size = request.POST.get('size')
 
             if action == 'delete':
                 # print('Delete1')
-                return JsonResponse(update_cart_and_response(user, None, quantity, action, cart_id))
+                return JsonResponse(update_cart_and_response(user, None, quantity, action, size, cart_id))
 
             try:
                 product = Item.objects.get(id=product_id)
 
                 if action == 'increment':
                     # print('Increment1')
-                    return JsonResponse(update_cart_and_response(user, product, quantity, action))
+                    return JsonResponse(update_cart_and_response(user, product, quantity, action, size))
 
                 elif action == 'decrement':
                     # print('decrement1')
-                    return JsonResponse(update_cart_and_response(user, product, quantity, action, cart_id))
+                    return JsonResponse(update_cart_and_response(user, product, quantity, action, size, cart_id))
 
-                # Если действие не соответствует ожидаемым значениям
                 else:
                     return JsonResponse({'error': 'Invalid action'}, status=400)
 
@@ -162,23 +163,24 @@ def ajax_request(request):
             quantity = int(request.POST.get('quantity', 1))
             cart_id = request.POST.get('cartId')
             action = request.POST.get('action')
+            size = request.POST.get('size')
+            print(size)
 
             if action == 'delete':
                 # print('Delete1')
-                return JsonResponse(update_cart_and_response(session_k, None, quantity, action, cart_id))
+                return JsonResponse(update_cart_and_response(session_k, None, quantity, action, size, cart_id))
 
             try:
                 product = Item.objects.get(id=product_id)
 
                 if action == 'increment':
                     # print('Increment1')
-                    return JsonResponse(update_cart_and_response(session_k, product, quantity, action))
+                    return JsonResponse(update_cart_and_response(session_k, product, quantity, action, size))
 
                 elif action == 'decrement':
                     # print('decrement1')
-                    return JsonResponse(update_cart_and_response(session_k, product, quantity, action, cart_id))
+                    return JsonResponse(update_cart_and_response(session_k, product, quantity, action, size, cart_id))
 
-                # Если действие не соответствует ожидаемым значениям
                 else:
                     return JsonResponse({'error': 'Invalid action'}, status=400)
 

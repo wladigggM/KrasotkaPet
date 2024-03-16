@@ -4,19 +4,25 @@
 {% block content %}
 <div class="product_item">
     <div class="description">
-        <h2>{{ item.name }}</h2>
+        <h2 style="color: #333;">{{ item.name }}</h2>
         {% if item.image %}
         <img class="product_img" src="{{item.image.url}}" alt="Картинка" class="item_img">
         {% else %}
         <img class="product_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate">
         {% endif %}
-
-        <label for="size">РАЗМЕР:</label>
-        <select name="size" id="size">
-            {% for size in item.size.all %}
-            <option value="{{ size.size_name }}">{{ size.size_name }}</option>
-            {% endfor %}
-        </select>
+        <div>
+            <a class="size_table_link" href="{% url 'size_table' %}">таблица размеров</a>
+        </div>
+        <nobr>
+            <div class="size-selector">
+                <label for="size">РАЗМЕР:</label>
+                <select name="size" id="size">
+                    {% for size in item.size.all %}
+                    <option value="{{ size.size_name }}">{{ size.size_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </nobr>
 
         <div class="price_cart" style="text-align: center;">
             {% if item.discount %}
@@ -24,7 +30,7 @@
             <b><p class="discounted-price">Скидка {{item.discount}}%</p></b>
             <p>{{ item.sell_price }} руб</p>
             {% else %}
-            <p>{{ item.price }} руб</p>
+            <p><h4 style="color: #333;">ЦЕНА:</h4>{{ item.price }} руб</p>
             {% endif %}
         </div>
         <button class="add-to-cart" data-product="{{ item.id }}" data-quantity="1"

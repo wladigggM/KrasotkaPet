@@ -473,6 +473,21 @@ iframe{
 .description_item {
     margin-left: 20%;  /* Добавляем отступ слева */
 }
+
+#success-message {
+    display: none; /* Сначала скрываем элемент */
+    position: fixed; /* Фиксированная позиция, чтобы сообщение оставалось на месте, даже если страница прокручивается */
+    top: 50%; /* Располагаем элемент по вертикали посередине */
+    left: 50%; /* Располагаем элемент по горизонтали посередине */
+    transform: translate(-50%, -50%); /* Центрируем элемент относительно его центральной точки */
+    background-color: #4CAF50; /* Цвет фона */
+    color: white; /* Цвет текста */
+    padding: 8px 16px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругление углов */
+    z-index: 9999; /* Устанавливаем высокий z-index, чтобы сообщение было поверх остального контента */
+    max-width: 200px; /* Максимальная ширина блока */
+    text-align: center; /* Выравнивание текста по центру */
+}
 /* - - - КОРЗИНА - - - */
 
 /* Стили для основного контейнера */
@@ -828,4 +843,47 @@ iframe{
     iframe {
         width: 100%;
     }
+}
+
+.size-selector {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.size-selector label {
+    color: #333;
+    font-weight: bold; /* Жирный шрифт для метки */
+}
+
+.size-selector select {
+    padding: 5px; /* Внутренние отступы для элемента выбора */
+    border: 1px solid #ccc; /* Граница для элемента выбора */
+    border-radius: 5px; /* Скругленные углы */
+    background-color: rgb(251 221 237/ 0.1%); /* Фоновый цвет элемента выбора */
+    color: #333; /* Цвет текста */
+    font-size: 14px; /* Размер шрифта */
+    width: 150px; /* Ширина элемента выбора, может быть изменена по вашему усмотрению */
+}
+
+/* При наведении курсора */
+.size-selector select:hover {
+    border-color: #999; /* Изменение цвета границы */
+}
+
+.table_size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.size_table_link {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: underline;
+}
+
+.size_table_link:hover {
+    color: rgb(253 103 221 / 70%);
 }

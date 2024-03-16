@@ -41,14 +41,19 @@ function addToCartWithJQuery(productId, quantity, path, size) {
             if (data.cartCount) {
                 $('#cart-count').text(`${data.cartCount}`);
             }
+            $('#success-message').text('Товар успешно добавлен в корзину.').show();
             console.log('Данные успешно отправлены на сервер:', data);
+
+            // Скрывает сообщение через 5 секунд
+            setTimeout(function() {
+                $('#success-message').fadeOut();
+            }, 2000);
         },
         error: function(error) {
             console.error('Ошибка при добавлении в корзину:', error);
         }
     });
 }
-
     } else if (
     url === 'http://127.0.0.1:8000/purchase/cart/' ||
     url === 'http://127.0.0.1:8000/users/account/'
@@ -83,11 +88,12 @@ $('.increment').on('click', function() {
     const quantity = button.data('quantity');
     const action = $(this).data('action');
     const path = $(this).data('path');
-    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'action', action, 'path=', path);
-    addToCartWithJQuery(productId, quantity, button, action, path);
+    const size = $(this).data('size');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity,'action', action, 'path=', path, 'size=', size);
+    addToCartWithJQuery(productId, quantity, button, action, path, size);
 });
 // AJAX
-function addToCartWithJQuery(productId, quantity, button, action, path) {
+function addToCartWithJQuery(productId, quantity, button, action, path, size) {
     $.ajax({
         url: path,
         type: 'POST',
@@ -95,6 +101,7 @@ function addToCartWithJQuery(productId, quantity, button, action, path) {
             'product_id': productId,
             'quantity': quantity,
             'action': action,
+            'size': size,
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
@@ -125,16 +132,18 @@ $('.trash_button').on('click', function() {
     const productId = $(this).data('product');
     const action = $(this).data('action');
     const path = $(this).data('path');
-    console.log('Отправка данных на сервер: cartId =', cartId,'action=', action, 'path', path, 'productId', productId);
-    removeCart(cartId, action, path, productId);
+    const size = $(this).data('size');
+    console.log('Отправка данных на сервер: cartId =', cartId,'action=', action, 'path', path, 'productId', productId, 'size=', size);
+    removeCart(cartId, action, path, productId, size);
 });
-function removeCart(cartId, action, path, productId) {
+function removeCart(cartId, action, path, productId, size) {
     $.ajax({
         url: path,
         type: 'POST',
         data: {
             'cartId': cartId,
             'action': action,
+            'size': size,
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
@@ -167,11 +176,12 @@ $('.decrement').on('click', function() {
     const cartId = button.data('cartid');
     const action = button.data('action');
     const path = button.data('path');
-    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity , 'cartId=',cartId, 'action',action, 'path=', path);
-    removeToCartWithJQuery(productId, quantity,cartId, button, action, path);
+    const size = $(this).data('size');
+    console.log('Отправка данных на сервер: productId =', productId, ', quantity =', quantity , 'cartId=',cartId, 'action',action, 'path=', path, 'size=', size);
+    removeToCartWithJQuery(productId, quantity,cartId, button, action, path, size);
 });
 // AJAX
-function removeToCartWithJQuery(productId, quantity, cartId, button, action, path) {
+function removeToCartWithJQuery(productId, quantity, cartId, button, action, path, size) {
     $.ajax({
         url: path,
         type: 'POST',
@@ -180,6 +190,7 @@ function removeToCartWithJQuery(productId, quantity, cartId, button, action, pat
             'quantity': quantity,
             'cartId': cartId,
             'action': action,
+            'size': size,
         },
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));

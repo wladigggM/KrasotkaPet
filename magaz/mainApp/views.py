@@ -126,6 +126,17 @@ class ReviewsListView(ListView):
     def get_queryset(self):
         return Reviews.objects.order_by('?')[:6]  # ДОБАВИТЬ В БД ID_USER
 
+
+class SizeTable(TemplateView):
+    def get(self, request, *args, **kwargs):
+        carts = get_cart_user(request)
+
+        data = {
+            'carts': carts
+        }
+
+        return render(request, 'size_table.html', data)
+
 # def reviews(request):
 #     global reviews
 #     if request.method == 'POST':

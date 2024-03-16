@@ -27,5 +27,6 @@ urlpatterns = [
     path('sale/', Sales.as_view(), name='sale'),
     path('category/<slug:cat_slug>/', ItemsView.as_view(), name='items'),
     path('reviews/', ReviewsListView.as_view(), name='reviews'),
-    path('category/<slug:cat_slug>/<slug:item_slug>/', AboutItemView.as_view(), name='item')
+    path('category/<slug:cat_slug>/<slug:item_slug>/', AboutItemView.as_view(), name='item'),
+    path('size_table/', SizeTable.as_view(), name='size_table'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

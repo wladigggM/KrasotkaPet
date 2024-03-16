@@ -26,6 +26,7 @@
             <div class="price_cart">
                 {% if item.discount %}
                 <p class="original-price">{{ item.price }} руб</p>
+                <b><p class="discounted-price">Скидка {{item.discount}}%</p></b>
                 <p>{{ item.sell_price }} руб</p>
                 {% endif %}
 <!--                <button class="add-to-cart" data-product="{{ item.id }}" data-quantity="1"-->

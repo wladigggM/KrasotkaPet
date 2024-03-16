@@ -41,6 +41,7 @@
                 <th>Количество</th>
                 <th>Сумма</th>
                 <th>Скидка</th>
+                <th>Размер</th>
                 <th></th>
             </tr>
             </thead>
@@ -56,12 +57,12 @@
                 <td>
                     <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="1"
                             data-cartid="{{cart.id}}" data-action="decrement"
-                            data-path="{{ request.build_absolute_uri }}">-
+                            data-path="{{ request.build_absolute_uri }}" data-size="{{ cart.size }}">{%csrf_token%}-
                     </button>
                     <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
                     <button class="increment" data-product="{{ cart.product.id }}"
                             data-path="{{ request.build_absolute_uri }}" data-quantity="1"
-                            data-action="increment">+
+                            data-action="increment" data-size="{{ cart.size }}">{%csrf_token%}+
                     </button>
                 </td>
                 <td id="total_price_item">{{cart.product_price}} руб</td>
@@ -70,17 +71,18 @@
                 {% else %}
                 <td>-</td>
                 {% endif %}
+                <td>{{ cart.size }}</td>
                 <td>
                     <button style="background-color: transparent;" class="trash_button"
                             data-path="{{ request.build_absolute_uri }}" data-cartid="{{ cart.id }}"
-                            data-action="delete"><img
+                            data-action="delete" data-product="{{ cart.product.id }}" data-size="{{ cart.size }}">
+                        {%csrf_token%}<img
                             src="{% static 'mainApp/img/корзина.png' %}"></button>
                 </td>
             </tr>
             </tbody>
             {% endfor %}
         </table>
-        {% if user.is_authenticated%}
         {% if not carts %}
         <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
         {% else %}
@@ -88,17 +90,23 @@
             Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
             Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
         </div>
+        {% if user.is_authenticated%}
         <div>
             <a href="#" methods="#" class="compleat">Оформить заказ</a>
         </div>
         {% endif %}
-        {% else %}
+        {% endif %}
+        {% if not user.is_authenticated%}
         <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
             <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
         </div>
         {% endif %}
+        <div style="text-align: center;">
+            <a class="size_table_link" href="{% url 'size_table' %}">таблица размеров</a>
+        </div>
     </div>
     {% endblock %}
+
 
     <!-- ИСТОРИЯ ЗАКАЗОВ -->
     <!-- АКТИВНЫЕ ЗАКАЗЫ (статус отправления и т д) -->
