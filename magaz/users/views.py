@@ -9,6 +9,7 @@ from django.views.generic import CreateView, ListView
 from cart.models import Cart
 from cart.utils import ajax_request
 from mainApp.models import Item
+from orders.models import Order, OrderItem
 from users.forms import RegisterUserForm
 
 # Create your views here.
@@ -64,10 +65,16 @@ class AccountView(View):
     def get(self, request, *args, **kwargs):
         user_profile = self.request.user
         carts = Cart.objects.filter(user=user_profile)
+        orders = Order.objects.filter(user=user_profile)
+        order_items = OrderItem.objects.filter(order__user=user_profile)
+
         data = {
             'user': user_profile,
             'carts': carts,
+            'orders': orders,
+            'order_items': order_items
         }
+
         return render(request, 'users/account.html', data)
 
     def post(self, request, *args, **kwargs):

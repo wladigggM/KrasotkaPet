@@ -887,3 +887,45 @@ iframe{
 .size_table_link:hover {
     color: rgb(253 103 221 / 70%);
 }
+
+/* СТИЛИ ДЕТАЛЕЙ ЗАКАЗА*/
+.order_data {
+    max-width: 500px;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order_data h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order_data label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.order_data input,
+.order_data select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order_data button {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(251 221 237);
+    color: #292b2c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.order_data button:hover {
+    background-color: #45a049;
+}

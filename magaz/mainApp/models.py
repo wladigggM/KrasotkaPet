@@ -27,7 +27,7 @@ class Size(models.Model):
     size_name = models.IntegerField(verbose_name='Размер')
 
     def __str__(self):
-        return str(self.size_name)
+        return f'{self.size_name} размер'
 
     class Meta:
         verbose_name = 'Размер'
@@ -46,6 +46,8 @@ class Item(models.Model):
     item_slug = models.SlugField(max_length=100, unique=True, verbose_name='Слаг (предмета))', blank=True)
     discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='Скидка')
     size = models.ManyToManyField(Size, verbose_name='Размеры')
+
+    # quantity = models.ForeignKey(to=Size, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name

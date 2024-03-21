@@ -62,7 +62,7 @@
     </div>
     {% if user.is_authenticated%}
     <div>
-        <a href="#" methods="#" class="compleat">Оформить заказ</a>
+        <a href="{% url 'orders:create_order'%}" methods="POST" class="compleat">Оформить заказ</a>
     </div>
     {% endif %}
     {% endif %}

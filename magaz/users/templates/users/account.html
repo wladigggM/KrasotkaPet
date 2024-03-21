@@ -32,6 +32,32 @@
         </form>
     </div>
     <div class="cart_container">
+
+    <h1>Заказы</h1>
+        <hr>
+    <ul>
+        {% for order in orders %}
+            <li>
+                <h4 style="text-align: right;">Заказ №: {{ order.id }}</h4><br>
+                <strong>Статус:</strong> {{ order.get_status_display }}<br>
+                <strong>Адресс доставки:</strong> {{ order.delivery_address }}<br>
+                <ul>
+                    {% for order_item in order.orderitem_set.all %}
+                    <hr>
+                        <li>
+                            <strong>Товар:</strong> {{ order_item.name }}<br>
+                            <strong>Цена:</strong> {{ order_item.price }}<br>
+                            <strong>Кол-во:</strong> {{ order_item.quantity }}<br>
+                            <strong>Размер:</strong> {{ order_item.size }}<br>
+                        </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+
         <h1>Корзина товаров</h1>
         <table>
             <thead>
@@ -105,8 +131,9 @@
             <a class="size_table_link" href="{% url 'size_table' %}">таблица размеров</a>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
 
 
-    <!-- ИСТОРИЯ ЗАКАЗОВ -->
-    <!-- АКТИВНЫЕ ЗАКАЗЫ (статус отправления и т д) -->
+<!-- ИСТОРИЯ ЗАКАЗОВ -->
+<!-- АКТИВНЫЕ ЗАКАЗЫ (статус отправления и т д) -->
