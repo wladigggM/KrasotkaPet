@@ -57,8 +57,8 @@
     <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
     {% else %}
     <div class="total">
-        Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
-        Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
+        <span><strong>Кол-во: </strong></span><span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
+        <span><strong>Итого: </strong></span><span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
     </div>
     {% if user.is_authenticated%}
     <div>

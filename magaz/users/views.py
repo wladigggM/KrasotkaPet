@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import CreateView, ListView
 
@@ -15,6 +15,8 @@ from users.forms import RegisterUserForm
 # Create your views here.
 
 from django.db.models import F
+
+from users.models import User
 
 
 class LoginUser(LoginView):
@@ -64,6 +66,7 @@ class AccountView(View):
 
     def get(self, request, *args, **kwargs):
         user_profile = self.request.user
+        print(user_profile)
         carts = Cart.objects.filter(user=user_profile)
         orders = Order.objects.filter(user=user_profile)
         order_items = OrderItem.objects.filter(order__user=user_profile)
@@ -78,7 +81,29 @@ class AccountView(View):
         return render(request, 'users/account.html', data)
 
     def post(self, request, *args, **kwargs):
-        return ajax_request(request)
+        user = request.user  # Получаем текущего пользователя
+
+        photo = request.FILES.get('photo')
+        first_name = request.POST.get('first-name')
+        last_name = request.POST.get('last-name')
+        phone_number = request.POST.get('phone-number')
+
+        if photo or first_name or last_name or phone_number:
+
+            if photo:
+                user.photo = photo
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            if phone_number:
+                user.phone_number = phone_number
+
+            user.save()
+
+            return HttpResponseRedirect(request.path)
+        else:
+            return ajax_request(request)
 
 
 class RegisterUser(CreateView):

@@ -6,35 +6,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'mainApp/css/style.css' %}"/>
     <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{% static 'mainApp/js/dark_mode1.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'mainApp/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mainApp/css/dark_mode_now.css' %}"/>
     <title></title>
 </head>
 
 <body>
-
 <script>
-    const linkElement = document.querySelector('link[rel="stylesheet"]');
-    const savedTheme = localStorage.getItem('selectedTheme');
-    if (savedTheme) {
-        linkElement.href = savedTheme;
-    }
-    function themeSelectorClickHandler() {
-    themeSelector.addEventListener('click', function() {
-        updateAndSaveTheme();
-    });
+if (!localStorage.getItem('scriptExecuted')) {
+    alert("САЙТ ЯВЛЯЕТСЯ ДЭМО ВЕРСИЕЙ, ЗАКАЗ ВЕЩЕЙ НЕВОЗМОЖЕН !!! НАЖИМАЯ КНОПКУ ОК ВЫ СОГЛАШАЕТЕСЬ С УСЛОВИЯМИ ТЕСТИРОВАНИЕ ДЕМО РЕЖИМА");
+    localStorage.setItem('scriptExecuted', 'true');
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleButton = document.querySelector('.mobile_nav_toggle');
-    const navList = document.querySelector('.main_nav_list');
-
-    toggleButton.addEventListener('click', function () {
-        toggleButton.classList.toggle('active');
-        navList.classList.toggle('active');
-    });
-});
 </script>
 
 <header class="header">
@@ -116,10 +101,35 @@ document.addEventListener('DOMContentLoaded', function () {
 </footer>
 <div class="iframe">
     <a name="bottom"></a>
-    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Acabe00bc532732b9281b46adffe3f626dcdd78c9b9a39b3fe4279d03a0b87442&amp;source=constructor"
+    <iframe data-src="https://yandex.ru/map-widget/v1/?um=constructor%3Acabe00bc532732b9281b46adffe3f626dcdd78c9b9a39b3fe4279d03a0b87442&amp;source=constructor"
             width="500" height="400" frameborder="0"></iframe>
 </div>
-<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
-<script src="{% static 'mainApp/js/dark_mode1.js' %}" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var iframes = document.querySelectorAll("iframe[data-src]");
+
+    function loadIframe() {
+        iframes.forEach(function(iframe) {
+            if (iframe.getBoundingClientRect().top < window.innerHeight && !iframe.getAttribute("src")) {
+                iframe.setAttribute("src", iframe.getAttribute("data-src"));
+            }
+        });
+    }
+
+    window.addEventListener("scroll", loadIframe);
+    window.addEventListener("resize", loadIframe);
+
+    loadIframe();
+
+    const toggleButton = document.querySelector('.mobile_nav_toggle');
+    const navList = document.querySelector('.main_nav_list');
+
+    toggleButton.addEventListener('click', function () {
+        toggleButton.classList.toggle('active');
+        navList.classList.toggle('active');
+    });
+});
+
+</script>
 </body>
 </html>

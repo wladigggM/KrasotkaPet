@@ -1,12 +1,11 @@
-from django.core.paginator import Paginator
-from django.db.models import Max
-from django.http import JsonResponse
+
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView
 
-from cart.models import Cart
+
 from cart.utils import get_cart_user, add_to_cart
+
 from .forms import *
 from .models import *
 
@@ -16,7 +15,8 @@ from .models import *
 
 class Index(ListView):
     def get(self, request, *args, **kwargs):
-        thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
+        thirty_days_ago = timezone.now().date() - timezone.timedelta(days=30)
+        # print(thirty_days_ago)
         new_items = Item.objects.filter(created_at__gte=thirty_days_ago)
         carts = get_cart_user(request)
         data = {
@@ -25,9 +25,6 @@ class Index(ListView):
         }
 
         return render(request, 'index.html', data)
-
-    def post(self, request, *args, **kwargs):
-        return add_to_cart(request)
 
 
 class About(TemplateView):
@@ -118,9 +115,14 @@ class ReviewsListView(ListView):
             try:
                 form.instance.user = request.user
                 form.save()
+
+                user = self.request.user
+                user.review = True
+                user.save()
+
                 return redirect('reviews-list')
             except Exception as e:
-                print(e)  # Printing the exception for debugging purposes
+                print(e)
         return self.get(request, *args, **kwargs)
 
     def get_queryset(self):

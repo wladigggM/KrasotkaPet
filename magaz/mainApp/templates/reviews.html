@@ -15,6 +15,7 @@
         <!-- УСЛОВИЕ НА ВОЗМОЖНОСТЬ ОТПРАВИТЬ ОТЗЫВ -->
     {% if user.is_authenticated %}
     {% if not user.is_staff %}
+    {% if user.review == False %}
         <div class="form-container">
             <h1>Оставить отзыв</h1>
             <form action="" method="POST">
@@ -22,6 +23,9 @@
         {{ form.as_p}}
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
+            {% else %}
+            <h1 style="text-align:center; color: rgb(175 117 148)">Вы уже оставили отзыв</h1>
+            {% endif %}
             {% else %}
             <h1 style="text-align:center; color: rgb(175 117 148)">Персонал не может оставлять отзывы !</h1>
             {% endif %}

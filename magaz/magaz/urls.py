@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from magaz import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('mainApp.urls')),
@@ -24,3 +26,11 @@ urlpatterns = [
     path('purchase/', include('cart.urls', namespace='purchase')),
     path('orders/', include('orders.urls', namespace='orders')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns = [
+        # ...
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

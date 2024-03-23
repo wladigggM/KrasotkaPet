@@ -18,7 +18,7 @@ class ItemAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at', 'slug_name', 'item_slug',)
     search_fields = ('name', 'id')
     fields = (
-        'name', ('price', 'discount'), 'category', 'description', ('created_at', 'updated_at'),
+        'name', ('price', 'discount'), 'category', 'description', 'image', ('created_at', 'updated_at'),
         ('slug_name', 'item_slug'), 'size',)
 
 

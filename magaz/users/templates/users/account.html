@@ -4,10 +4,11 @@
 
 <div class="acc_container">
     <div class="user-details">
-        <h2>Здравствуйте, {{user.username}} !</h2>
+        <h2>Здравствуйте, {% if user.first_name %} {{ user.first_name }} {% else %} {{user.username}} {% endif %} !</h2>
         <p><b>Ваш email: </b> {{user.email}}</p>
         <hr>
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="#" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             {% if not user.photo %}
             <label for="photo">Загрузить фото:</label><br>
             <input type="file" id="photo" name="photo"><br>
@@ -26,7 +27,14 @@
             {% else %}
             <h3>Фамилия: {{user.last_name}}</h3>
             {% endif %}
-            {% if not user.first_name or not user.last_name or not user.photo %}
+            {% if not user.phone_number %}
+            <label for="last-name">Номер телефона:</label><br>
+            <input type="text" id="phone-number" name="phone-number"><br>
+            {% else %}
+            <h3>Номер телефона: {{user.phone_number}}</h3>
+            {% endif %}
+
+            {% if not user.first_name or not user.last_name or not user.photo or not user.phone_number %}
             <input type="submit" value="Сохранить">
             {% endif %}
         </form>

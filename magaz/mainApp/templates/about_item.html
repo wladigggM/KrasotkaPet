@@ -4,7 +4,7 @@
 {% block content %}
 <div class="product_item">
     <div class="description">
-        <h2 style="color: #333;">{{ item.name }}</h2>
+        <h2>{{ item.name }}</h2>
         {% if item.image %}
         <img class="product_img" src="{{item.image.url}}" alt="Картинка" class="item_img">
         {% else %}
@@ -30,7 +30,7 @@
             <b><p class="discounted-price">Скидка {{item.discount}}%</p></b>
             <p>{{ item.sell_price }} руб</p>
             {% else %}
-            <p><h4 style="color: #333;">ЦЕНА:</h4>{{ item.price }} руб</p>
+            <p><h4>ЦЕНА:</h4>{{ item.price }} руб</p>
             {% endif %}
         </div>
         <button class="add-to-cart" data-product="{{ item.id }}" data-quantity="1"
@@ -43,4 +43,5 @@
         {{ item.description|linebreaks }}</p>
     </div>
 </div>
+<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
 {% endblock %}

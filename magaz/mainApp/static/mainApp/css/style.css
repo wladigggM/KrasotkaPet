@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    transition: background-color 1s ease, color 1s ease;
+
 }
 body, html{
     height: 100%;
@@ -22,8 +22,7 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #292b2c;
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: white;
     overflow-x: hidden;
 }
 
@@ -36,8 +35,7 @@ body {
     display: flex;
     justify-content: space-between;
 }
-.theme-selector{
-}
+
 .logo {
     width: 50%;
     max-width: 200px;
@@ -118,13 +116,13 @@ main {
     transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
     font-size: 25px;
     letter-spacing: 0;
-    display: inline-block; /* Обеспечивает правильное применение transform */
+    display: inline-block;
 }
 
 .nav_cat:hover {
     color: #ff69b4;
     text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
-    transform: perspective(500px) scale(1.5); /* Приближение к монитору с использованием perspective */
+    transform: perspective(500px) scale(1.5);
 }
 .mobile_nav_toggle {
     display: none;
@@ -152,6 +150,7 @@ main {
 /* Стили для основного контента */
 
 h2 {
+    color: #292b2c;
     font-size: 30px;
     margin-bottom: 1%;
 }
@@ -174,7 +173,7 @@ ul {
 
 .item_list_item {
     text-align:center;
-    max-width: 250px; /* Ширина элемента, чтобы установить одинаковую ширину для всех элементов */
+    max-width: 250px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -182,9 +181,9 @@ ul {
     margin: 2%;
 }
 .item_img {
-    width: 100%; /* Ширина 100%, чтобы изображение занимало всю доступную ширину контейнера */
-    height: 300px; /* Фиксированная высота для изображения */
-    object-fit: contain; /* Заполнение контейнера, сохраняя при этом соотношение сторон */
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
     transition: transform 0.5s ease;
 }
 .price_cart {
@@ -246,7 +245,6 @@ footer {
 }
 
 iframe{
-    margin-bottom: 30px;
     border: 1px solid #3333333d;
     border-radius: 10px;
 }
@@ -254,6 +252,8 @@ iframe{
     background-color: rgb(251 221 237);
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 
@@ -285,7 +285,7 @@ iframe{
     margin-bottom: 10px;
 }
 .review-rating {
-    color: #ff9800; /* Цвет звезд рейтинга */
+    color: #ff9800;
     font-size: 1.2em;
     margin-bottom: 5px;
 }
@@ -327,13 +327,13 @@ iframe{
 .username {
     /* Добавьте стили, которые хотите применить к username */
     font-weight: bold;
-    color: rgb(255 137 200); /* Например, розовый цвет */
+    color: rgb(255 137 200);
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .username:hover {
-    color: #ff69b4; /* Например, розовый цвет при наведении */
-    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5); /* Небольшая тень */
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 .auth_form {
@@ -379,7 +379,7 @@ iframe{
 }
 
 .auth_form input:focus {
-    border-color: #007bff; /* Цвет рамки при фокусе */
+    border-color: #007bff;
     outline: none;
 }
 
@@ -428,7 +428,7 @@ iframe{
     margin-top: 10px;
     font-family: 'Arial', sans-serif;
     font-size: 14px;
-    color: #333; /* цвет ссылки */
+    color: #333;
     text-decoration: none;
 }
 
@@ -446,12 +446,11 @@ iframe{
     background-color: white;
     color: #333;
     border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 /*- - - - - -*/
 /*ОПИСАНИЕ ITEM*/
 .product_item {
-    display: flex;  /* Размещаем блоки внутри .product в строку */
+    display: flex;
     padding: 3%;
     margin-bottom: 20px;
 }
@@ -471,22 +470,22 @@ iframe{
 }
 
 .description_item {
-    margin-left: 20%;  /* Добавляем отступ слева */
+    margin-left: 20%;
 }
 
 #success-message {
-    display: none; /* Сначала скрываем элемент */
-    position: fixed; /* Фиксированная позиция, чтобы сообщение оставалось на месте, даже если страница прокручивается */
-    top: 50%; /* Располагаем элемент по вертикали посередине */
-    left: 50%; /* Располагаем элемент по горизонтали посередине */
-    transform: translate(-50%, -50%); /* Центрируем элемент относительно его центральной точки */
-    background-color: #4CAF50; /* Цвет фона */
-    color: white; /* Цвет текста */
-    padding: 8px 16px; /* Внутренние отступы */
-    border-radius: 5px; /* Скругление углов */
-    z-index: 9999; /* Устанавливаем высокий z-index, чтобы сообщение было поверх остального контента */
-    max-width: 200px; /* Максимальная ширина блока */
-    text-align: center; /* Выравнивание текста по центру */
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    z-index: 9999;
+    max-width: 200px;
+    text-align: center;
 }
 /* - - - КОРЗИНА - - - */
 
@@ -580,26 +579,26 @@ iframe{
     display: inline-block;
     padding: 3px;
     background-color: rgb(251, 221, 237);
-    color: #333; /* Цвет текста */
+    color: #333;
     text-decoration: none;
-    border: 0.5px solid #3333334a; /* Обводка кнопки */
-    border-radius: 5px; /* Скругление углов */
+    border: 0.5px solid #3333334a;
+    border-radius: 5px;
     font-family: Arial, sans-serif;
 }
 
 .add-to-cart:hover {
-    background-color: #f9c6d3; /* Цвет фона при наведении */
+    background-color: #f9c6d3;
 }
 
 /* - - - - - - - - - - - - - - */
 
 .original-price {
-    text-decoration: line-through; /* Зачеркивание текста */
-    color: gray; /* Цвет текста для оригинальной цены */
+    text-decoration: line-through;
+    color: gray;
 }
 
 .discounted-price {
-    color: rgb(255, 204, 229); /* Цвет текста для цены со скидкой */
+    color: rgb(255, 204, 229);
     border: 1px solid;
     text-shadow: 1px 1px 2px rgb(0 0 0);
 }
@@ -699,12 +698,12 @@ iframe{
     border-radius: 20%;
     right: 20px;
     bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* добавляем анимацию к свойствам transform и box-shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .buy_cart:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* добавляем подсветку при наведении */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .buy_cart_img {
@@ -728,17 +727,73 @@ iframe{
     font-size: 12px;
 }
 /* - - - кнопки увеличения/уменьшения кол-ва предметов в корзине - - - -*/
-.increment, decrement {
+.increment {
     margin: 1%;
     width: 20px;
     border-radius: 20%;
+    color: #333333;
+    background-color: rgb(251 221 237);
+}
+.decrement {
+    margin: 1%;
+    width: 20px;
+    border-radius: 20%;
+    color: #333333;
+    background-color: rgb(251 221 237);
 }
 
 /*- - - - МЕДИА - - - - -*/
 
 /* Стили для узких экранов (например, на мобильных устройствах) */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 667px) {
+    table {
+        width: 100%;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tbody {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    table tbody tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+    }
+
+    table tbody td {
+        display: block;
+        text-align: left;
+    }
+
+    table tbody td:first-child {
+        font-weight: bold;
+    }
+
+    table tbody td:last-child {
+        text-align: right;
+    }
+
+    table tbody td {
+        display: block;
+        margin: 10px auto;
+    }
+
+    table tbody td img {
+        display: block;
+        margin: 0 auto;
+    }
+
     iframe {
         width: 100%;
     }
@@ -785,8 +840,8 @@ iframe{
     }
 
     .trash_button img {
-        width: 100px; /* увеличьте или уменьшите размер по вашему усмотрению */
-        height: auto; /* чтобы сохранить пропорции изображения */
+        width: 100px;
+        height: auto;
     }
     /* ================================================================= */
     /* гамбургер */
@@ -795,10 +850,10 @@ iframe{
     }
 
     .main_nav_list {
-        display: none; /* Initially hide the navigation list */
+        display: none;
         flex-direction: column;
         position: relative;
-        top: 60px; /* Adjust as per your design */
+        top: 60px;
         left: 0;
         width: 100%;
         padding: 10px;
@@ -811,7 +866,7 @@ iframe{
 
     .main_nav_list.active {
         border-top: 1px solid #3333333d;
-        display: flex; /* Show when active */
+        display: flex;
     }
 
     .mobile_nav_toggle.active span:nth-child(1) {
@@ -853,22 +908,22 @@ iframe{
 
 .size-selector label {
     color: #333;
-    font-weight: bold; /* Жирный шрифт для метки */
+    font-weight: bold;
 }
 
 .size-selector select {
-    padding: 5px; /* Внутренние отступы для элемента выбора */
-    border: 1px solid #ccc; /* Граница для элемента выбора */
-    border-radius: 5px; /* Скругленные углы */
-    background-color: rgb(251 221 237/ 0.1%); /* Фоновый цвет элемента выбора */
-    color: #333; /* Цвет текста */
-    font-size: 14px; /* Размер шрифта */
-    width: 150px; /* Ширина элемента выбора, может быть изменена по вашему усмотрению */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgb(251 221 237/ 0.1%);
+    color: #333;
+    font-size: 14px;
+    width: 150px;
 }
 
 /* При наведении курсора */
 .size-selector select:hover {
-    border-color: #999; /* Изменение цвета границы */
+    border-color: #999;
 }
 
 .table_size {

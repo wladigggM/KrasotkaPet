@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-		<section class="item-section">
-			<h2 style="text-align:center; color: #333;">Категории</h2>
-			<ul class="item_list">
-				{% for cat in categories %}
-					<li class="item_list_item"><a href="http://127.0.0.1:8000/category/{{cat.slug_name}}/"><img src="{% static 'mainApp/img/юбка.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
-				{% endfor %}
-			</ul>
-		</section>
+<section class="item-section">
+    <h2 style="text-align:center;">Категории</h2>
+    <ul class="item_list">
+        {% for cat in categories %}
+        <li class="item_list_item"><a href="http://127.0.0.1:8000/category/{{cat.slug_name}}/">
+            {% if cat.slug_name == 'domashnjaja-odezhda' %}
+            	<img src="{% static 'mainApp/img/домашняя_одежда.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+			{% elif cat.slug_name == 'nizhnee-bele' %}
+        		<img src="{% static 'mainApp/img/нижнее_белье.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+			{% elif cat.slug_name == 'noski' %}
+				<img src="{% static 'mainApp/img/носки.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+			{% elif cat.slug_name == 'platja' %}
+				<img src="{% static 'mainApp/img/платья.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+			{% elif cat.slug_name == 'bluzki' %}
+				<img src="{% static 'mainApp/img/блузки.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+			{% elif cat.slug_name == 'trikotazh' %}
+				<img src="{% static 'mainApp/img/трикотаж.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+        	{% else %}
+        		<img src="{% static 'mainApp/img/юбка.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
+        	{% endif %}
+        {% endfor %}
+    </ul>
+</section>
 {% endblock %}

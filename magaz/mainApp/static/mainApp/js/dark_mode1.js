@@ -1,73 +1,17 @@
-const themeSelector = document.querySelector('.theme-selector');
-
-// Функция для установки стилей в зависимости от значения в localStorage
-function setThemeFromLocalStorage() {
-    const savedTheme = localStorage.getItem('selectedTheme');
-    if (savedTheme) {
-        linkElement.href = savedTheme;
+    var selectedTheme = localStorage.getItem('selectedTheme');
+    if(selectedTheme) {
+        $("link[rel=stylesheet]:eq(2)").attr("href", selectedTheme);
     }
-}
 
-// Функция для обновления стилей и сохранения в localStorage
-function updateAndSaveTheme() {
-    if (linkElement.href.includes('/static/mainApp/css/style.css')) {
-        themeSelector.value = '\u{1F31A}';
-        linkElement.href = '/static/mainApp/css/dark_mode.css';
-        localStorage.setItem('selectedTheme', '/static/mainApp/css/dark_mode.css');
-    } else {
-        themeSelector.value = '\u{1F31D}';
-        linkElement.href = '/static/mainApp/css/style.css';
-        localStorage.setItem('selectedTheme', '/static/mainApp/css/style.css');
-    }
-}
+    $(".theme-selector").click(function(){
+        var newTheme;
+        if(selectedTheme === '/static/mainApp/css/dark_mode_now.css') {
+            newTheme = '/static/mainApp/css/style.css';
+        } else {
+            newTheme = '/static/mainApp/css/dark_mode_now.css';
+        }
+        $("link[rel=stylesheet]:eq(2)").attr("href", newTheme);
 
-// Обработчик клика по селектору темы
-//function themeSelectorClickHandler() {
-//    themeSelector.addEventListener('click', function() {
-//        updateAndSaveTheme();
-//    });
-//}
-
-
-// Вызов функции для установки стилей при загрузке страницы
-document.addEventListener('DOMContentLoaded', setThemeFromLocalStorage)
-// Вызов функции для обработки клика по селектору темы
-themeSelectorClickHandler();
-
-
-//
-//
-//
-//
-//
-//function dark_in_light(){
-//    document.addEventListener("DOMContentLoaded", function () {
-//        var themeSelector = document.querySelector(".theme-selector");
-//        var linkElement = document.querySelector('link[href*="dark_mode.css"]');
-//
-//        themeSelector.addEventListener("click", function () {
-//            if (linkElement) {
-//                linkElement.href = "/static/mainApp/css/style.css";
-//            }
-//        });
-//    });
-//
-//}
-//
-//
-//
-//
-//
-//function light_in_dark(){
-//    document.addEventListener("DOMContentLoaded", function () {
-//        var themeSelector = document.querySelector(".theme-selector");
-//        var linkElement = document.querySelector('link[href*="style.css"]');
-//
-//        themeSelector.addEventListener("click", function () {
-//            if (linkElement) {
-//                linkElement.href = "/static/mainApp/css/dark_mode.css";
-//            }
-//        });
-//    });
-//
-//}
+        selectedTheme = newTheme;
+        localStorage.setItem('selectedTheme', newTheme);
+    });
