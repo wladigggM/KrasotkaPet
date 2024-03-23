@@ -8,7 +8,7 @@
         {%for item in items %}
         <li class="item_list_item">
             {% if item.image %}
-            <a href="http://127.0.0.1:8000/category/{{item.slug_name}}/{{item.item_slug}}/"><img src="{{item.image.url}}" alt="Картинка" class="item_img"></a>
+            <a href="{% url 'category' %}/{{item.slug_name}}/{{item.item_slug}}/"><img src="{{item.image.url}}" alt="Картинка" class="item_img"></a>
             {% else %}
             <a href="#"><img class="item_img" src="{% static 'mainApp/img/юбка.png' %}" alt="this is image of cate"></a>
             {% endif %}

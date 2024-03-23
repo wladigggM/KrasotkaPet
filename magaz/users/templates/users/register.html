@@ -8,6 +8,6 @@
         <p><label>{{f.label}}</label></p> <p>{{f}}</p>
     {% endfor %}
     <p><input type="submit" value="Зарегистрироваться" class="auth_submit"></p>
-      <p><a href="http://127.0.0.1:8000/users/login/">Уже зарегестрирован?</a></p>
+      <p><a href="{% url 'users:login' %}">Уже зарегестрирован?</a></p>
 </form>
 {% endblock %}

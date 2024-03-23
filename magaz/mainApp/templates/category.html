@@ -5,7 +5,7 @@
     <h2 style="text-align:center;">Категории</h2>
     <ul class="item_list">
         {% for cat in categories %}
-        <li class="item_list_item"><a href="http://127.0.0.1:8000/category/{{cat.slug_name}}/">
+        <li class="item_list_item"><a href="{% url 'category' %}/{{cat.slug_name}}/">
             {% if cat.slug_name == 'domashnjaja-odezhda' %}
             	<img src="{% static 'mainApp/img/домашняя_одежда.png' %}" alt><br></a><h4>{{cat.name}}</h4></li>
 			{% elif cat.slug_name == 'nizhnee-bele' %}

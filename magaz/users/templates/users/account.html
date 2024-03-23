@@ -132,7 +132,7 @@
         {% endif %}
         {% if not user.is_authenticated%}
         <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
-            <a href='http://127.0.0.1:8000/users/login/' style="color: red;">Необходимо авторизоваться</a>
+            <a href="{% url 'users:login' %}" style="color: red;">Необходимо авторизоваться</a>
         </div>
         {% endif %}
         <div style="text-align: center;">
