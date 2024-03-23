@@ -1,0 +1,109 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+{% block content %}
+<div class="cart_container">
+    <h1>Корзина товаров</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Название товара</th>
+            <th>Цен</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Скидка</th>
+            <th>Размер</th>
+        </tr>
+        </thead>
+        {% for cart in carts %}
+        <tbody>
+        <tr class="{{cart.id}}">
+            <td>{{cart.product.name}}</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.sell_price}} руб</td>
+            {% else %}
+            <td>{{cart.product.price}} руб</td>
+            {% endif %}
+            <td>
+                <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
+            </td>
+            <td id="total_price_item">{{cart.product_price}} руб</td>
+            {% if cart.product.discount %}
+            <td>{{cart.product.discount}}%</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            <td>{{ cart.size }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+
+
+    <div class="order_data">
+        <h1>Детали заказа</h1>
+        <form action="{% url 'orders:create_order'%}" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="first_name">Имя:</label>
+                <input placeholder="Введите имя" type="text" id="first_name"
+                       value="{% if user.first_name %}{{user.first_name}}{% endif %}"
+                       name="first_name" required>
+                {% if form.first_name.errors %}
+                <div class="error">{{form.first_name.errors}}</div>
+                {% endif %}
+                <label for="last_name">Фамилия:</label>
+                <input placeholder="Введите фамилию" type="text" id="last_name"
+                       value="{% if user.last_name %}{{user.last_name}}{% endif %}"
+                       name="last_name" required>
+                {% if form.last_name.errors %}
+                <div class="error">{{form.last_name.errors}}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="phone_number">Номер телефона:</label>
+                <input type="tel" id="phone_number" name="phone_number"
+                       value="{% if user.phone_number %}{{user.phone_number}}{% endif %}"
+                       placeholder="В формате XXX-XXX-XX-XX" required>
+                {% if form.phone_number.errors %}
+                <div class="error">{{form.phone_number.errors}}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="delivery_method">Способ доставки:</label>
+                <select id="delivery_method" name="delivery_method">
+                    <option value="0">Самовывоз</option>
+                    <option value="1">Доставка</option>
+                </select>
+            </div>
+            <div>
+                <label for="address">Адрес доставки:</label>
+                <input placeholder="Введите адрес доставки" type="text" id="address"
+                       value="{% if form.delivery_address.value %}{{form.delivery_address.value}}{% endif %}"
+                       name="address">
+                {% if form.delivery_address.errors %}
+                <div class="error">{{form.delivery_address.errors}}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="payment_method">Способ оплаты:</label>
+                <select id="payment_method" name="payment_method">
+                    <option value="0">Оплата наличными</option>
+                    <option value="1">Оплата картой</option>
+                </select>
+            </div>
+            <div class="total">
+                Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
+            </div>
+            <button type="submit">Оформить заказ</button>
+        </form>
+    </div>
+</div>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
+{% endblock %}
