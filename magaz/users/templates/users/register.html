@@ -2,12 +2,14 @@
 {% load static %}
 {% block content %}
 <form method="POST" class="auth_form">
-    {% csrf_token  %}
-        <div class="errorlist">{{ form.errors}}</div>
-    {% for f in form %}
-        <p><label>{{f.label}}</label></p> <p>{{f}}</p>
+    {% csrf_token %}
+    <div class="errorlist">{{ form.non_field_errors }}</div>
+    {% for field in form %}
+        <p><label>{{ field.label }}</label></p>
+        <p>{{ field }}</p>
+        <div class="errorlist">{{ field.errors }}</div>
     {% endfor %}
     <p><input type="submit" value="Зарегистрироваться" class="auth_submit"></p>
-      <p><a href="{% url 'users:login' %}">Уже зарегестрирован?</a></p>
+    <p><a href="{% url 'users:login' %}">Уже зарегистрирован?</a></p>
 </form>
 {% endblock %}

@@ -156,7 +156,7 @@ function removeCart(cartId, action, path, productId, size) {
                 if (data.totalUserCart == 0) {
                 $('.compleat').remove();
                 $('.total').remove();
-                $('.cart_container table').after(emptyBlock);
+                $('.cart_container table:first').after(emptyBlock);
                 }
             }
             console.log('Данные успешно отправлены на сервер:', data);
@@ -220,6 +220,41 @@ function removeToCartWithJQuery(productId, quantity, cartId, button, action, pat
         },
         error: function(error) {
             console.error('Ошибка при удалении товара из корзины:', error);
+        }
+    });
+}
+
+$('.clear_order_button').on('click', function() {
+
+    const path = $(this).data('path');
+    const orderId = $(this).data('order');
+    console.log(orderId)
+    const action = $(this).data('action');
+    console.log('Отправка данных на сервер:', 'orderId=', orderId, 'action= ', action, 'path=', path );
+
+    removeOrder(orderId, action, path);
+
+});
+
+function removeOrder(orderId, action, path) {
+    $.ajax({
+        url: path,
+        type: 'POST',
+        data: {
+            'orderId': orderId,
+            'action': action,
+        },
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        },
+        success: function(data) {
+            if (data) {
+                $('#' + orderId).remove();
+            }
+            console.log('Данные успешно отправлены на сервер:', data);
+        },
+        error: function(error) {
+            console.error('Ошибка при удалении корзины:', error);
         }
     });
 }

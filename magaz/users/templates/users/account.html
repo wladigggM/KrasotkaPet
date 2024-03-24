@@ -3,10 +3,15 @@
 {% block content %}
 
 <div class="acc_container">
+
     <div class="user-details">
         <h2>Здравствуйте, {% if user.first_name %} {{ user.first_name }} {% else %} {{user.username}} {% endif %} !</h2>
         <p><b>Ваш email: </b> {{user.email}}</p>
         <hr>
+
+        <h5 style="text-align: right;"><a style="color:blue;" href="{% url 'users:update_profile'%}">редактировать
+            профиль</a></h5>
+
         <form action="#" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% if not user.photo %}
@@ -38,108 +43,130 @@
             <input type="submit" value="Сохранить">
             {% endif %}
         </form>
+
     </div>
-    <div class="cart_container">
+    <div class="order_cart">
 
-    <h1>Заказы</h1>
-        <hr>
-    <ul>
-        {% for order in orders %}
-            <li>
-                <h4 style="text-align: right;">Заказ №: {{ order.id }}</h4><br>
-                <strong>Статус:</strong> {{ order.get_status_display }}<br>
-                <strong>Адресс доставки:</strong> {{ order.delivery_address }}<br>
-                <ul>
+        <div class="cart_container">
+            <h1>Корзина товаров</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                    <th>Скидка</th>
+                    <th>Размер</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for cart in carts %}
+                <tbody>
+                <tr class="{{cart.id}}">
+                    <td>{{cart.product.name}}</td>
+                    {% if cart.product.discount %}
+                    <td>{{cart.product.sell_price}} руб</td>
+                    {% else %}
+                    <td>{{cart.product.price}} руб</td>
+                    {% endif %}
+                    <td>
+                        <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="1"
+                                data-cartid="{{cart.id}}" data-action="decrement"
+                                data-path="{{ request.build_absolute_uri }}" data-size="{{ cart.size }}">{%csrf_token%}-
+                        </button>
+                        <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
+                        <button class="increment" data-product="{{ cart.product.id }}"
+                                data-path="{{ request.build_absolute_uri }}" data-quantity="1"
+                                data-action="increment" data-size="{{ cart.size }}">{%csrf_token%}+
+                        </button>
+                    </td>
+                    <td id="total_price_item">{{cart.product_price}} руб</td>
+                    {% if cart.product.discount %}
+                    <td>{{cart.product.discount}}%</td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                    <td>{{ cart.size }}</td>
+                    <td>
+                        <button style="background-color: transparent;" class="trash_button" id="trash_button"
+                                data-path="{{ request.build_absolute_uri }}" data-cartid="{{ cart.id }}"
+                                data-action="delete" data-product="{{ cart.product.id }}" data-size="{{ cart.size }}">
+                            {%csrf_token%}<img
+                                src="{% static 'mainApp/img/корзина.png' %}"></button>
+                    </td>
+                </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% if not carts %}
+            <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
+            {% else %}
+            <div class="total">
+                Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
+                Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
+            </div>
+            {% if user.is_authenticated%}
+            <div>
+                <a href="{% url 'orders:create_order' %}" methods="#" class="compleat">Оформить заказ</a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if not user.is_authenticated%}
+            <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
+                <a href="{% url 'users:login' %}" style="color: red;">Необходимо авторизоваться</a>
+            </div>
+            {% endif %}
+            <div style="text-align: center;">
+                <a class="size_table_link" href="{% url 'size_table' %}">таблица размеров</a>
+            </div>
+        </div>
+
+        <!-- ЗАКАЗЫ -->
+
+        <div class="cart_container">
+            <h1>Заказы</h1>
+            <hr>
+            <table>
+                <thead>
+                <tr>
+                    <th class="order_number">Заказ №</th>
+                    <th>Статус</th>
+                    <th>Адрес доставки</th>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Кол-во</th>
+                    <th>Размер</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for order in orders %}
+                <tbody id="{{order.id}}">
+                <tr>
+                    <td class="order_number">{{ order.id }}</td>
+                    <br>
+                    <td>{{order.get_status_display}}</td>
+                    <td>{{order.delivery_address}}</td>
                     {% for order_item in order.orderitem_set.all %}
-                    <hr>
-                        <li>
-                            <strong>Товар:</strong> {{ order_item.name }}<br>
-                            <strong>Цена:</strong> {{ order_item.price }}<br>
-                            <strong>Кол-во:</strong> {{ order_item.quantity }}<br>
-                            <strong>Размер:</strong> {{ order_item.size }}<br>
-                        </li>
-                    <hr>
+                    <td>{{ order_item.name }}</td>
+                    <td>{{order_item.price}} руб</td>
+                    <td>{{order_item.quantity}} шт</td>
+                    <td>{{order_item.size}}</td>
+                    <td><button data-path="{{ request.build_absolute_uri }}" data-order="{{order.id}}"
+                                data-action="clear" style="background-color: transparent;"
+                                class="clear_order_button">
+                            <img src="{% static 'mainApp/img/корзина.png' %}"></button>
+                    </td>
                     {% endfor %}
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
+                </tr>
+                </tbody>
+                {% endfor %}
+            </table>
 
-
-        <h1>Корзина товаров</h1>
-        <table>
-            <thead>
-            <tr>
-                <th>Название товара</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-                <th>Скидка</th>
-                <th>Размер</th>
-                <th></th>
-            </tr>
-            </thead>
-            {% for cart in carts %}
-            <tbody>
-            <tr class="{{cart.id}}">
-                <td>{{cart.product.name}}</td>
-                {% if cart.product.discount %}
-                <td>{{cart.product.sell_price}} руб</td>
-                {% else %}
-                <td>{{cart.product.price}} руб</td>
-                {% endif %}
-                <td>
-                    <button class="decrement" data-product="{{ cart.product.id }}" data-quantity="1"
-                            data-cartid="{{cart.id}}" data-action="decrement"
-                            data-path="{{ request.build_absolute_uri }}" data-size="{{ cart.size }}">{%csrf_token%}-
-                    </button>
-                    <p class="cart-quantity-item">{{ cart.quantity }} шт</p>
-                    <button class="increment" data-product="{{ cart.product.id }}"
-                            data-path="{{ request.build_absolute_uri }}" data-quantity="1"
-                            data-action="increment" data-size="{{ cart.size }}">{%csrf_token%}+
-                    </button>
-                </td>
-                <td id="total_price_item">{{cart.product_price}} руб</td>
-                {% if cart.product.discount %}
-                <td>{{cart.product.discount}}%</td>
-                {% else %}
-                <td>-</td>
-                {% endif %}
-                <td>{{ cart.size }}</td>
-                <td>
-                    <button style="background-color: transparent;" class="trash_button"
-                            data-path="{{ request.build_absolute_uri }}" data-cartid="{{ cart.id }}"
-                            data-action="delete" data-product="{{ cart.product.id }}" data-size="{{ cart.size }}">
-                        {%csrf_token%}<img
-                            src="{% static 'mainApp/img/корзина.png' %}"></button>
-                </td>
-            </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        {% if not carts %}
-        <h4 style="text-align: center; margin-top: 2%;">Пусто</h4>
-        {% else %}
-        <div class="total">
-            Кол-во: <span><strong id="total_quantity">{{carts.total_quantity}} шт</strong></span><br>
-            Итого: <span><strong id="total_price"> {{carts.total_price}} руб</strong></span>
-        </div>
-        {% if user.is_authenticated%}
-        <div>
-            <a href="#" methods="#" class="compleat">Оформить заказ</a>
-        </div>
-        {% endif %}
-        {% endif %}
-        {% if not user.is_authenticated%}
-        <div class="not_authorized" style="width:250px;display:block;margin-left: auto;margin-right:auto;">
-            <a href="{% url 'users:login' %}" style="color: red;">Необходимо авторизоваться</a>
-        </div>
-        {% endif %}
-        <div style="text-align: center;">
-            <a class="size_table_link" href="{% url 'size_table' %}">таблица размеров</a>
         </div>
     </div>
 </div>
+<script src="{% static 'mainApp/js/jquery-ajax.js' %}"></script>
 {% endblock %}
 
 

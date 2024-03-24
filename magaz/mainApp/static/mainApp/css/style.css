@@ -679,6 +679,14 @@ iframe{
     border-radius: 50%;
     transition: box-shadow 1s ease, background-color 1s ease;
 }
+.clear_order_button img{
+    width: auto;
+    min-width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: box-shadow 1s ease, background-color 1s ease;
+}
 
 .trash_button img:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -792,6 +800,16 @@ iframe{
     table tbody td img {
         display: block;
         margin: 0 auto;
+    }
+    .product_img {
+        height: 100%;
+        max-width: 100%;
+    }
+    .product_item {
+        flex-direction: column;
+    }
+    .description_item {
+        margin-top:10%;
     }
 
     iframe {

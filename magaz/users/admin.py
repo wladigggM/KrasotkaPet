@@ -1,5 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+
+from cart.admin import CartTabular
+from orders.admin import OrderTabularAdmin
 from .models import User
 
 
@@ -15,6 +18,8 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("username", "first_name", "last_name", "email")
     ordering = ("username",)
+
+    inlines = (OrderTabularAdmin, CartTabular, )
 
 
 admin.site.register(User, CustomUserAdmin)

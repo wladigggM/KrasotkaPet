@@ -752,7 +752,7 @@ iframe{
 
 /* Стили для узких экранов*/
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 667px) {
     table {
         width: 100%;
     }

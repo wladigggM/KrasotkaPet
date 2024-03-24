@@ -49,14 +49,14 @@
                        value="{% if user.first_name %}{{user.first_name}}{% endif %}"
                        name="first_name" required>
                 {% if form.first_name.errors %}
-                <div class="error">{{form.first_name.errors}}</div>
+                <div class="errorlist">{{form.first_name.errors}}</div>
                 {% endif %}
                 <label for="last_name">Фамилия:</label>
                 <input placeholder="Введите фамилию" type="text" id="last_name"
                        value="{% if user.last_name %}{{user.last_name}}{% endif %}"
                        name="last_name" required>
                 {% if form.last_name.errors %}
-                <div class="error">{{form.last_name.errors}}</div>
+                <div class="errorlist">{{form.last_name.errors}}</div>
                 {% endif %}
             </div>
             <div>
@@ -65,7 +65,7 @@
                        value="{% if user.phone_number %}{{user.phone_number}}{% endif %}"
                        placeholder="В формате XXX-XXX-XX-XX" required>
                 {% if form.phone_number.errors %}
-                <div class="error">{{form.phone_number.errors}}</div>
+                <div class="errorlist">{{form.phone_number.errors}}</div>
                 {% endif %}
             </div>
             <div>
@@ -81,7 +81,7 @@
                        value="{% if form.delivery_address.value %}{{form.delivery_address.value}}{% endif %}"
                        name="address">
                 {% if form.delivery_address.errors %}
-                <div class="error">{{form.delivery_address.errors}}</div>
+                <div class="errorlist">{{form.delivery_address.errors}}</div>
                 {% endif %}
             </div>
             <div>

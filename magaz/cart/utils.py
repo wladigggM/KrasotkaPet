@@ -1,3 +1,4 @@
+from orders.models import Order
 from users.models import User
 from django.http import JsonResponse
 
@@ -71,7 +72,7 @@ def update_cart_and_response(user_or_session_key, product, quantity, action, siz
 
     if action == 'delete':
         try:
-            print(size)
+            print(cart_id)
             remove_cart = Cart.objects.get(id=cart_id, **filter_params, size=size)
             remove_cart.delete()
             success = True
@@ -133,12 +134,21 @@ def ajax_request(request):
             product_id = request.POST.get('product_id')
             quantity = int(request.POST.get('quantity', 1))
             cart_id = request.POST.get('cartId')
+            print('cart_id', cart_id)
             action = request.POST.get('action')
             size = request.POST.get('size')
+            print(size)
+            orderId = request.POST.get('orderId')
 
             if action == 'delete':
-                # print('Delete1')
+                print('Delete1')
                 return JsonResponse(update_cart_and_response(user, None, quantity, action, size, cart_id))
+
+            elif action == 'clear':
+                print(f'CLEAR + ORDERID ={orderId}')
+                remove_order = Order.objects.filter(user=request.user, id=orderId)
+                remove_order.delete()
+                return JsonResponse({'message': 'Заказ удалён'})
 
             try:
                 product = Item.objects.get(id=product_id)

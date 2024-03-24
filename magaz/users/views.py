@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, ListView
 
@@ -83,6 +84,8 @@ class AccountView(View):
     def post(self, request, *args, **kwargs):
         user = request.user  # Получаем текущего пользователя
 
+        action = request.POST.get('action')
+
         photo = request.FILES.get('photo')
         first_name = request.POST.get('first-name')
         last_name = request.POST.get('last-name')
@@ -102,8 +105,10 @@ class AccountView(View):
             user.save()
 
             return HttpResponseRedirect(request.path)
-        else:
+        elif action:
             return ajax_request(request)
+        else:
+            return HttpResponseRedirect(request.path)
 
 
 class RegisterUser(CreateView):
@@ -120,3 +125,43 @@ class RegisterUser(CreateView):
                 Cart.objects.filter(session_key=session_key).update(user=self.request.user)
 
         return response
+
+
+class UpdateProfile(View):
+
+    def get(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        print(user_profile)
+        carts = Cart.objects.filter(user=user_profile)
+
+        data = {
+            'user': user_profile,
+            'carts': carts,
+        }
+
+        return render(request, 'users/update_profile.html', data)
+
+    def post(self, request, *args, **kwargs):
+        user = request.user  # Получаем текущего пользователя
+
+        photo = request.FILES.get('photo')
+        first_name = request.POST.get('first-name')
+        last_name = request.POST.get('last-name')
+        phone_number = request.POST.get('phone-number')
+
+        if photo or first_name or last_name or phone_number:
+
+            if photo:
+                user.photo = photo
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            if phone_number:
+                user.phone_number = phone_number
+
+            user.save()
+
+            return HttpResponseRedirect('/users/account/')
+        else:
+            return HttpResponseRedirect(request.path)
