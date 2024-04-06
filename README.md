@@ -25,7 +25,7 @@
 
 ## Как использовать
 
-1. Клонируйте репозиторий на свой компьютер: `git clone https://github.com/wladigggM/project.git`.
+1. Клонируйте репозиторий на свой компьютер: `git clone https://github.com/wladigggM/KrasotkaPet.git`.
 2. Установите зависимости: `pip install -r requirements.txt`.
 3. Запустите приложение: `python manage.py runserver`.
 4. Откройте браузер и перейдите по адресу `http://localhost:8000`.
